@@ -1115,3 +1115,19 @@ button,a,input,select,textarea{min-width:0}
   .mobile-menu{padding-bottom:max(24px,env(safe-area-inset-bottom))}
   .footer{padding-bottom:max(24px,env(safe-area-inset-bottom))}
 }
+
+
+/* Delivery performance polish */
+.hero-media img,.project-image img,.fan-card img,.price-visual img,.warranty-bg img{
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+.project-image img,.fan-card img,.price-visual img{
+  content-visibility:auto;
+}
+@media (hover:none){
+  .project-card:hover .project-image img,
+  .price-card.secondary:hover .price-visual img{
+    transform:none;
+  }
+}
