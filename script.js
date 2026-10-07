@@ -44,6 +44,7 @@
 
   if (!reduced && window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true });
 
     if (lenis) {
       lenis.on('scroll', ScrollTrigger.update);
@@ -191,8 +192,8 @@
       description: 'A refined, bright lower level built around everyday living and entertaining. The project pairs a contemporary kitchen and bar with premium bathroom finishes, warm wood details and carefully integrated lighting.',
       meta: ['Kitchen & bar', 'Bathroom', 'Custom lighting', 'Finished lower level'],
       images: [
-        {src:'assets/projects/adrian-01.png',alt:'Project Adrian kitchen and bar'},
-        {src:'assets/projects/adrian-02.png',alt:'Project Adrian finished bathroom'}
+        {src:'https://drive.google.com/thumbnail?id=1j9g4bVNxCIVGP7P6X3YdypQIU0QooAia&sz=w1600',fallback:'assets/projects/adrian-01.png',alt:'Project Adrian kitchen and bar'},
+        {src:'https://drive.google.com/thumbnail?id=15XMFUYjHIOnsNk6Ct6I1j01Xb_WCh2B_&sz=w1600',fallback:'assets/projects/adrian-02.png',alt:'Project Adrian finished bathroom'}
       ]
     },
     thelma: {
@@ -201,8 +202,8 @@
       description: 'A sharp contemporary basement finish with a strong bathroom moment: large-format stone-look surfaces, a glass shower, crisp white millwork and layered lighting for a polished, high-contrast result.',
       meta: ['Bathroom', 'Glass shower', 'Stone-look surfaces', 'Lighting'],
       images: [
-        {src:'assets/projects/thelma-01.png',alt:'Project Thelma black stone bathroom'},
-        {src:'assets/projects/thelma-02.jpg',alt:'Project Thelma finished lower-level detail'}
+        {src:'https://drive.google.com/thumbnail?id=1WtvBZfbhDgaVj_h0Q-5x46GeXJhBVZQS&sz=w1600',fallback:'assets/projects/thelma-01.png',alt:'Project Thelma black stone bathroom'},
+        {src:'https://drive.google.com/thumbnail?id=1fo8YWnVIF5fSLFSsMSPP0gzu5CI0gAhi&sz=w1600',fallback:'assets/projects/thelma-02.jpg',alt:'Project Thelma finished lower-level detail'}
       ]
     },
     long: {
@@ -211,8 +212,8 @@
       description: 'A warm, comfortable media-focused basement built for long evenings in. Recessed lighting, wood flooring and an integrated entertainment wall turn the lower level into a relaxed gathering space.',
       meta: ['Media lounge', 'Entertainment wall', 'Recessed lighting', 'Wood flooring'],
       images: [
-        {src:'assets/projects/long-01.jpg',alt:'Project Long media lounge'},
-        {src:'assets/projects/long-02.jpg',alt:'Project Long finished basement'}
+        {src:'https://drive.google.com/thumbnail?id=1X2xtgBmiI8n9Pij0YpyRu6lW9G9_4i0q&sz=w1600',fallback:'assets/projects/long-01.jpg',alt:'Project Long media lounge'},
+        {src:'https://drive.google.com/thumbnail?id=1YxpIR7thx42ArOZ6xO3_2ArKumpdMKoE&sz=w1600',fallback:'assets/projects/long-02.jpg',alt:'Project Long finished basement'}
       ]
     },
     wainfleet: {
@@ -221,8 +222,8 @@
       description: 'A dramatic basement lounge with a cinema-first mood. Deep charcoal finishes, a black ceiling, warm wood accents and a compact beverage area create a comfortable space that feels intentional rather than improvised.',
       meta: ['Cinema lounge', 'Dark finish palette', 'Beverage area', 'Feature lighting'],
       images: [
-        {src:'assets/projects/wainfleet-01.jpg',alt:'Project Wainfleet dark cinema lounge'},
-        {src:'assets/projects/wainfleet-02.jpg',alt:'Project Wainfleet entertainment basement'}
+        {src:'https://drive.google.com/thumbnail?id=1t5DchMVzVhCp82yrEfKm20pRlrHI87n8&sz=w1600',fallback:'assets/projects/wainfleet-01.jpg',alt:'Project Wainfleet dark cinema lounge'},
+        {src:'https://drive.google.com/thumbnail?id=1c-Xjvzhrkt5Gq6PTQuxnCM_ZdLKCOfrZ&sz=w1600',fallback:'assets/projects/wainfleet-02.jpg',alt:'Project Wainfleet entertainment basement'}
       ]
     },
     archdekin: {
@@ -231,8 +232,8 @@
       description: 'A custom wall treatment developed through careful trim work, geometric framing and warm slatted-wood accents. The before-and-after views show the transition from build stage to a deep matte finished feature wall.',
       meta: ['Custom trim', 'Feature wall', 'Wood accents', 'Finish work'],
       images: [
-        {src:'assets/projects/archdekin-01.jpg',alt:'Project Archdekin feature wall in progress'},
-        {src:'assets/projects/archdekin-02.jpg',alt:'Project Archdekin finished black feature wall'}
+        {src:'https://drive.google.com/thumbnail?id=1UF2EHqrIY7TxVDH7J2p99RagDmNZgHyo&sz=w1600',fallback:'assets/projects/archdekin-01.jpg',alt:'Project Archdekin feature wall in progress'},
+        {src:'https://drive.google.com/thumbnail?id=13eJbVCK8vqj6MS6-H3XyFhsEwFK49YRp&sz=w1600',fallback:'assets/projects/archdekin-02.jpg',alt:'Project Archdekin finished black feature wall'}
       ]
     },
     yellowhammer: {
@@ -272,14 +273,27 @@
     projectModalKicker.textContent = project.kicker;
     projectModalDescription.textContent = project.description;
     projectModalMeta.innerHTML = project.meta.map((item,index)=>`<span><b>0${index+1}</b>${item}</span>`).join('');
-    projectModalGallery.innerHTML = project.images.map((image,index)=>`<figure class="project-modal-image ${index===0?'project-modal-image-main':''}"><img src="${image.src}" alt="${image.alt}" loading="eager" referrerpolicy="no-referrer"></figure>`).join('');
+    projectModalGallery.innerHTML = project.images.map((image,index)=>`<figure class="project-modal-image ${index===0?'project-modal-image-main':''}"><img src="${image.src}" alt="${image.alt}" loading="eager" decoding="async" fetchpriority="${index===0?'high':'auto'}" referrerpolicy="no-referrer" ${image.fallback?`onerror="this.onerror=null;this.src='${image.fallback}'"`:''}></figure>`).join('');
     projectModal.classList.add('is-open');
     projectModal.setAttribute('aria-hidden','false');
     document.body.classList.add('project-modal-open');
     projectModal.querySelector('.project-modal-close')?.focus();
   };
 
+  const warmProject = (key) => {
+    const project = projectPortfolio[key];
+    if (!project || project._warmed) return;
+    project._warmed = true;
+    project.images.slice(0,2).forEach(item => {
+      const preload = new Image();
+      preload.decoding = 'async';
+      preload.src = item.src;
+    });
+  };
+
   document.querySelectorAll('[data-project]').forEach(card=>{
+    card.addEventListener('pointerenter',()=>warmProject(card.dataset.project),{passive:true});
+    card.addEventListener('focus',()=>warmProject(card.dataset.project),{passive:true});
     card.addEventListener('click',()=>openProjectModal(card.dataset.project,card));
   });
   projectModal?.querySelectorAll('[data-project-close]').forEach(button=>button.addEventListener('click',closeProjectModal));
