@@ -123,4 +123,107 @@
     closeMenu();
     window.ScrollTrigger?.refresh();
   });
+  const projectPortfolio = {
+    adrian: {
+      title: 'Project Adrian',
+      kicker: 'Complete lower-level renovation',
+      description: 'A refined, bright lower level built around everyday living and entertaining. The project pairs a contemporary kitchen and bar with premium bathroom finishes, warm wood details and carefully integrated lighting.',
+      meta: ['Kitchen & bar', 'Bathroom', 'Custom lighting', 'Finished lower level'],
+      images: [
+        {src:'assets/projects/adrian-01.png',alt:'Project Adrian kitchen and bar'},
+        {src:'assets/projects/adrian-02.png',alt:'Project Adrian finished bathroom'}
+      ]
+    },
+    thelma: {
+      title: 'Project Thelma',
+      kicker: 'Bathroom-focused finish',
+      description: 'A sharp contemporary basement finish with a strong bathroom moment: large-format stone-look surfaces, a glass shower, crisp white millwork and layered lighting for a polished, high-contrast result.',
+      meta: ['Bathroom', 'Glass shower', 'Stone-look surfaces', 'Lighting'],
+      images: [
+        {src:'assets/projects/thelma-01.png',alt:'Project Thelma black stone bathroom'},
+        {src:'assets/projects/thelma-02.jpg',alt:'Project Thelma finished lower-level detail'}
+      ]
+    },
+    long: {
+      title: 'Project Long',
+      kicker: 'Media lounge',
+      description: 'A warm, comfortable media-focused basement built for long evenings in. Recessed lighting, wood flooring and an integrated entertainment wall turn the lower level into a relaxed gathering space.',
+      meta: ['Media lounge', 'Entertainment wall', 'Recessed lighting', 'Wood flooring'],
+      images: [
+        {src:'assets/projects/long-01.jpg',alt:'Project Long media lounge'},
+        {src:'assets/projects/long-02.jpg',alt:'Project Long finished basement'}
+      ]
+    },
+    wainfleet: {
+      title: 'Project Wainfleet',
+      kicker: 'Dark cinema lounge',
+      description: 'A dramatic basement lounge with a cinema-first mood. Deep charcoal finishes, a black ceiling, warm wood accents and a compact beverage area create a comfortable space that feels intentional rather than improvised.',
+      meta: ['Cinema lounge', 'Dark finish palette', 'Beverage area', 'Feature lighting'],
+      images: [
+        {src:'assets/projects/wainfleet-01.jpg',alt:'Project Wainfleet dark cinema lounge'},
+        {src:'assets/projects/wainfleet-02.jpg',alt:'Project Wainfleet entertainment basement'}
+      ]
+    },
+    archdekin: {
+      title: 'Project Archdekin',
+      kicker: 'Feature wall detailing',
+      description: 'A custom wall treatment developed through careful trim work, geometric framing and warm slatted-wood accents. The before-and-after views show the transition from build stage to a deep matte finished feature wall.',
+      meta: ['Custom trim', 'Feature wall', 'Wood accents', 'Finish work'],
+      images: [
+        {src:'assets/projects/archdekin-01.jpg',alt:'Project Archdekin feature wall in progress'},
+        {src:'assets/projects/archdekin-02.jpg',alt:'Project Archdekin finished black feature wall'}
+      ]
+    },
+    yellowhammer: {
+      title: 'Project Yellowhammer',
+      kicker: 'Entertainment basement',
+      description: 'A bold entertainment-driven lower level with a dark ceiling, integrated media wall, fireplace and blue accent lighting. The room is designed to feel immersive while still working as an everyday lounge.',
+      meta: ['Media wall', 'Fireplace', 'Accent lighting', 'Lounge'],
+      images: [
+        {src:'https://drive.google.com/thumbnail?id=1VQD2Zvt582V3wbA8eO4kGgCsmnToCM3d&sz=w1600',alt:'Project Yellowhammer entertainment basement'},
+        {src:'https://drive.google.com/thumbnail?id=1oC513vqD0nCuM1jBueqcGYMtIMVIPf3O&sz=w1600',alt:'Project Yellowhammer finished lower level'}
+      ]
+    }
+  };
+
+  const projectModal = document.querySelector('#projectModal');
+  const projectModalTitle = document.querySelector('#projectModalTitle');
+  const projectModalKicker = document.querySelector('#projectModalKicker');
+  const projectModalDescription = document.querySelector('#projectModalDescription');
+  const projectModalMeta = document.querySelector('#projectModalMeta');
+  const projectModalGallery = document.querySelector('#projectModalGallery');
+  let projectReturnFocus = null;
+
+  const closeProjectModal = () => {
+    if (!projectModal) return;
+    projectModal.classList.remove('is-open');
+    projectModal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('project-modal-open');
+    projectModalGallery.innerHTML = '';
+    projectReturnFocus?.focus?.();
+  };
+
+  const openProjectModal = (key, trigger) => {
+    const project = projectPortfolio[key];
+    if (!project || !projectModal) return;
+    projectReturnFocus = trigger || null;
+    projectModalTitle.textContent = project.title;
+    projectModalKicker.textContent = project.kicker;
+    projectModalDescription.textContent = project.description;
+    projectModalMeta.innerHTML = project.meta.map((item,index)=>`<span><b>0${index+1}</b>${item}</span>`).join('');
+    projectModalGallery.innerHTML = project.images.map((image,index)=>`<figure class="project-modal-image ${index===0?'project-modal-image-main':''}"><img src="${image.src}" alt="${image.alt}" loading="eager" referrerpolicy="no-referrer"></figure>`).join('');
+    projectModal.classList.add('is-open');
+    projectModal.setAttribute('aria-hidden','false');
+    document.body.classList.add('project-modal-open');
+    projectModal.querySelector('.project-modal-close')?.focus();
+  };
+
+  document.querySelectorAll('[data-project]').forEach(card=>{
+    card.addEventListener('click',()=>openProjectModal(card.dataset.project,card));
+  });
+  projectModal?.querySelectorAll('[data-project-close]').forEach(button=>button.addEventListener('click',closeProjectModal));
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape' && projectModal?.classList.contains('is-open')) closeProjectModal();
+  });
+
 })();

@@ -159,23 +159,73 @@
       </div>
     </section>
 
-    <section class="work-intro section-dark" id="work">
-      <div class="container section-head light">
-        <div><div class="section-kicker reveal-up">Our work</div><h2 class="display-heading reveal-lines">Spaces that earn<br><em>their place in your home.</em></h2></div>
-        <p class="reveal-up">A selection of finished spaces shown on the original YLB website — brighter living rooms, functional kitchens, bathrooms and dramatic entertainment rooms.</p>
+    <section class="projects-showcase section-dark" id="work">
+      <div class="container projects-heading">
+        <div>
+          <div class="section-kicker reveal-up">Selected project portfolio</div>
+          <h2 class="display-heading reveal-lines">Real basements.<br><em>Built for real life.</em></h2>
+        </div>
+        <div class="projects-intro reveal-up">
+          <p>Explore real YLB project work from our client archive. Every card opens its own project story and photography — no stock gallery, no filler.</p>
+          <span>Click any project to view details</span>
+        </div>
+      </div>
+
+      <div class="container project-grid" aria-label="YLB project portfolio">
+        <button class="project-card project-card-wide reveal-card" type="button" data-project="adrian" aria-label="View Project Adrian">
+          <span class="project-index">01</span>
+          <div class="project-image"><img src="assets/projects/adrian-01.png" alt="Project Adrian finished basement kitchen and bar" loading="lazy" /></div>
+          <div class="project-card-copy"><div><span>Complete lower level</span><h3>Project Adrian</h3></div><i>View project ↗</i></div>
+        </button>
+
+        <button class="project-card reveal-card" type="button" data-project="thelma" aria-label="View Project Thelma">
+          <span class="project-index">02</span>
+          <div class="project-image"><img src="assets/projects/thelma-01.png" alt="Project Thelma finished basement bathroom" loading="lazy" /></div>
+          <div class="project-card-copy"><div><span>Bathroom finish</span><h3>Project Thelma</h3></div><i>View project ↗</i></div>
+        </button>
+
+        <button class="project-card reveal-card" type="button" data-project="long" aria-label="View Project Long">
+          <span class="project-index">03</span>
+          <div class="project-image"><img src="assets/projects/long-01.jpg" alt="Project Long basement media lounge" loading="lazy" /></div>
+          <div class="project-card-copy"><div><span>Media lounge</span><h3>Project Long</h3></div><i>View project ↗</i></div>
+        </button>
+
+        <button class="project-card project-card-tall reveal-card" type="button" data-project="wainfleet" aria-label="View Project Wainfleet">
+          <span class="project-index">04</span>
+          <div class="project-image"><img src="assets/projects/wainfleet-01.jpg" alt="Project Wainfleet dark basement cinema lounge" loading="lazy" /></div>
+          <div class="project-card-copy"><div><span>Cinema lounge</span><h3>Project Wainfleet</h3></div><i>View project ↗</i></div>
+        </button>
+
+        <button class="project-card reveal-card" type="button" data-project="archdekin" aria-label="View Project Archdekin">
+          <span class="project-index">05</span>
+          <div class="project-image"><img src="assets/projects/archdekin-02.jpg" alt="Project Archdekin custom feature wall" loading="lazy" /></div>
+          <div class="project-card-copy"><div><span>Feature wall detailing</span><h3>Project Archdekin</h3></div><i>View project ↗</i></div>
+        </button>
+
+        <button class="project-card project-card-wide reveal-card" type="button" data-project="yellowhammer" aria-label="View Project Yellowhammer">
+          <span class="project-index">06</span>
+          <div class="project-image"><img src="https://drive.google.com/thumbnail?id=1VQD2Zvt582V3wbA8eO4kGgCsmnToCM3d&sz=w1600" alt="Project Yellowhammer finished entertainment basement" loading="lazy" referrerpolicy="no-referrer" /></div>
+          <div class="project-card-copy"><div><span>Entertainment basement</span><h3>Project Yellowhammer</h3></div><i>View project ↗</i></div>
+        </button>
       </div>
     </section>
 
-    <section class="horizontal-gallery section-dark" aria-label="Project gallery">
-      <div class="gallery-track">
-        <article class="gallery-panel"><span>01 / Living</span><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=85" alt="Finished bright basement living room" /><div class="panel-caption">Light-filled everyday living</div></article>
-        <article class="gallery-panel"><span>02 / Kitchen</span><img src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?auto=format&fit=crop&w=1400&q=85" alt="Finished basement kitchen" /><div class="panel-caption">Clean, practical finishes</div></article>
-        <article class="gallery-panel dark-panel"><span>03 / Theatre</span><img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1400&q=85" alt="Dark basement home theatre" /><div class="panel-caption">A cinematic lower level</div></article>
-        <article class="gallery-panel"><span>04 / Bath</span><img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1400&q=85" alt="Finished basement bathroom" /><div class="panel-caption">Simple, bright and functional</div></article>
-        <article class="gallery-panel"><span>05 / Open Space</span><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1400&q=85" alt="Open concept finished basement" /><div class="panel-caption">Room to gather</div></article>
-        <article class="gallery-panel dark-panel"><span>06 / Lounge</span><img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&w=1400&q=85" alt="Finished dark basement lounge" /><div class="panel-caption">Designed around how you live</div></article>
+    <div class="project-modal" id="projectModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+      <button class="project-modal-backdrop" type="button" data-project-close aria-label="Close project"></button>
+      <div class="project-modal-panel" role="document">
+        <div class="project-modal-top">
+          <div><span class="project-modal-kicker" id="projectModalKicker">YLB PROJECT</span><h2 id="projectModalTitle">Project</h2></div>
+          <button class="project-modal-close" type="button" data-project-close aria-label="Close project">Close <span>×</span></button>
+        </div>
+        <div class="project-modal-body">
+          <div class="project-modal-copy">
+            <p id="projectModalDescription"></p>
+            <div class="project-modal-meta" id="projectModalMeta"></div>
+          </div>
+          <div class="project-modal-gallery" id="projectModalGallery"></div>
+        </div>
       </div>
-    </section>
+    </div>
 
     <section class="process section-light">
       <div class="container process-wrap">
