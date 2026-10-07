@@ -1974,3 +1974,23 @@ button,a,input,select,textarea{min-width:0}
     top:96px!important;
   }
 }
+
+
+/* Remove the translucent white orb from over the Reel screen */
+.instagram-media:before{
+  display:none!important;
+  content:none!important;
+}
+.instagram-device,
+.instagram-device-top,
+.instagram-embed-shell{
+  isolation:isolate;
+}
+.instagram-device{
+  z-index:5!important;
+}
+.instagram-embed-shell:before,
+.instagram-embed-shell:after{
+  display:none!important;
+  content:none!important;
+}
