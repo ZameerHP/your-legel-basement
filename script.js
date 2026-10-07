@@ -51,15 +51,56 @@
       gsap.ticker.lagSmoothing(0);
     }
 
-    gsap.from('.hero-eyebrow', { y: 14, opacity: 0, duration: .6, ease: 'power2.out' });
-    gsap.from('.hero-title span', { yPercent: 105, opacity: 0, duration: .85, stagger: .06, delay: .08, ease: 'power3.out' });
-    gsap.from('.hero-bottom', { y: 18, opacity: 0, duration: .7, delay: .18, ease: 'power2.out' });
-    gsap.from('.hero-stats > div', { y: 10, opacity: 0, duration: .55, stagger: .05, delay: .25, ease: 'power2.out' });
+    const loader = document.querySelector('.page-loader');
+    const launch = gsap.timeline({
+      defaults:{ease:'power3.out'},
+      onComplete:()=>{
+        document.body.classList.remove('is-loading');
+        loader?.classList.add('is-done');
+      }
+    });
+
+    if(loader){
+      launch
+        .from('.loader-kicker',{y:10,opacity:0,duration:.35})
+        .from('.loader-mark span',{x:-46,opacity:0,duration:.48},'-=.12')
+        .from('.loader-mark strong',{x:52,opacity:0,duration:.52},'-=.38')
+        .to('.loader-line i',{scaleX:1,duration:.58,ease:'power2.inOut'},'-=.2')
+        .from('.loader-inner small',{opacity:0,y:6,duration:.26},'-=.24')
+        .to('.loader-inner',{opacity:0,y:-10,duration:.38,delay:.12,ease:'power2.in'})
+        .to(loader,{opacity:0,duration:.42,ease:'power2.out'})
+        .set(loader,{visibility:'hidden'});
+    }
+
+    launch
+      .from('.hero-media img',{scale:1.12,filter:'brightness(.68)',duration:1.45,ease:'power2.out'},loader?'-=.2':0)
+      .from('.site-header',{y:-24,opacity:0,duration:.62},'-=1.08')
+      .from('.hero-eyebrow',{x:-46,opacity:0,duration:.62},'-=.9')
+      .from('.hero-proof',{x:42,opacity:0,duration:.58},'-=.58')
+      .from('.hero-title span:first-child',{x:-86,opacity:0,rotate:.8,duration:.88},'-=.34')
+      .from('.hero-title span:last-child',{x:92,opacity:0,rotate:-.8,duration:.92},'-=.72')
+      .from('.hero-rule span',{scaleX:0,transformOrigin:'left',duration:.66},'-=.45')
+      .from('.hero-rule i',{opacity:0,x:14,duration:.45},'-=.45')
+      .from('.hero-bottom p',{x:-34,opacity:0,duration:.62},'-=.28')
+      .from('.hero-ctas .button',{x:34,opacity:0,duration:.58,stagger:.08},'-=.52')
+      .from('.hero-stats > div',{y:24,opacity:0,duration:.5,stagger:.09},'-=.26')
+      .from('.scroll-cue',{opacity:0,y:-10,duration:.4},'-=.28');
 
     gsap.to('.hero-media img', {
-      scale: 1,
-      ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .6 }
+      scale:1.025,
+      yPercent:4,
+      ease:'none',
+      scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.7}
+    });
+    gsap.to('.hero-title span:first-child',{
+      xPercent:-2.5,
+      ease:'none',
+      scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.7}
+    });
+    gsap.to('.hero-title span:last-child',{
+      xPercent:2.5,
+      ease:'none',
+      scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.7}
     });
 
     document.querySelectorAll('.reveal-up,.reveal-card,.reveal-scale,.reveal-lines').forEach((el) => {
@@ -87,7 +128,12 @@
         btn.addEventListener('mouseleave', () => gsap.to(btn, { x: 0, y: 0, duration: .3, ease: 'power2.out' }));
       }
     });
-  } else if (lenis) {
+  } else {
+    document.body.classList.remove('is-loading');
+    document.querySelector('.page-loader')?.classList.add('is-done');
+  }
+
+  if (lenis && (!window.gsap || !window.ScrollTrigger || reduced)) {
     const raf = (time) => {
       lenis.raf(time);
       requestAnimationFrame(raf);
