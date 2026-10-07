@@ -10,9 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles-1.css" />
   <link rel="stylesheet" href="styles-2.css" />
-  <link rel="stylesheet" href="styles-3.css" />\n  <link rel="stylesheet" href="styles-clean.css" />
+  <link rel="stylesheet" href="styles-3.css" />\n  <link rel="stylesheet" href="styles-clean.css?v=4" />
 </head>
-<body>
+<body class="is-loading">
+  <div class="page-loader" aria-hidden="true"><div class="loader-inner"><span class="loader-kicker">Yours Legal Basement</span><div class="loader-mark"><span>YOURS</span><strong>LEGAL BASEMENT</strong></div><div class="loader-line"><i></i></div><small>Design · Renovate · Finish</small></div></div>
   <div class="noise" aria-hidden="true"></div>
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
@@ -46,8 +47,12 @@
       <div class="hero-orbit orbit-one" aria-hidden="true"></div>
       <div class="hero-orbit orbit-two" aria-hidden="true"></div>
       <div class="hero-inner container">
-        <div class="eyebrow hero-eyebrow"><span class="dot"></span> Serving across the GTA region</div>
+        <div class="hero-topline">
+          <div class="eyebrow hero-eyebrow"><span class="dot"></span> Serving across the GTA region</div>
+          <div class="hero-proof" aria-hidden="true"><span>EST.</span><strong>GTA</strong><i>01</i></div>
+        </div>
         <h1 id="hero-title" class="hero-title split-reveal"><span>#1 Basement</span><span>Renovation Company</span></h1>
+        <div class="hero-rule" aria-hidden="true"><span></span><i>DESIGN · BUILD · FINISH</i></div>
         <div class="hero-bottom">
           <p>Beautiful, functional basement spaces built with thoughtful design, skilled installation, premium materials and a stress-free approach.</p>
           <div class="hero-ctas">
@@ -287,13 +292,13 @@
       <div class="footer-col"><span>Navigate</span><a href="#prices">Prices</a><a href="#work">Our Work</a><a href="#why-us">Why YLB</a><a href="#estimate">Free Estimate</a></div>
       <div class="footer-col"><span>Contact</span><a href="tel:+14372377704">(437) 237-7704</a><p>Mon–Fri · 8AM–9PM<br>Sat–Sun · 8AM–7PM</p></div>
     </div>
-    <div class="container footer-wordmark" aria-hidden="true">YLB</div>
+    <div class="container footer-wordmark" aria-hidden="true"><span>Yours Legal</span><strong>Basement</strong></div>
     <div class="container footer-bottom"><span>© <span id="year"></span> Yours Legal Basement.</span><span>Serving the GTA region.</span></div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>
