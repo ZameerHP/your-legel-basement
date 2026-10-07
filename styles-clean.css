@@ -1451,3 +1451,92 @@ button,a,input,select,textarea{min-width:0}
     aspect-ratio:4/3;
   }
 }
+
+
+/* Official Reel embed reliability pass */
+.instagram-embed-shell{
+  aspect-ratio:auto!important;
+  min-height:690px;
+  display:grid;
+  place-items:start center;
+  overflow:hidden;
+  background:#f5f2ec;
+}
+.instagram-official-embed{
+  position:relative;
+  z-index:2;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  border:0!important;
+  background:#fff!important;
+}
+.instagram-embed-shell .instagram-media{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+.instagram-embed-shell iframe{
+  position:relative!important;
+  z-index:3!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  border:0!important;
+}
+.instagram-embed-shell.is-ready .instagram-embed-placeholder{
+  opacity:0;
+  visibility:hidden;
+}
+.instagram-reel-fallback{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  display:none;
+  place-items:center;
+  align-content:center;
+  gap:8px;
+  padding:30px;
+  text-align:center;
+  color:#fff;
+  background:
+    radial-gradient(circle at 50% 38%,rgba(239,17,26,.22),transparent 25%),
+    linear-gradient(160deg,#171717,#090909 72%);
+}
+.instagram-embed-shell.is-fallback .instagram-official-embed{
+  display:none!important;
+}
+.instagram-embed-shell.is-fallback .instagram-embed-placeholder{
+  display:none!important;
+}
+.instagram-embed-shell.is-fallback .instagram-reel-fallback{
+  display:grid;
+}
+.instagram-fallback-play{
+  display:grid;
+  place-items:center;
+  width:72px;height:72px;
+  margin-bottom:9px;
+  padding-left:4px;
+  border:1px solid rgba(255,255,255,.24);
+  border-radius:50%;
+  background:var(--red);
+  box-shadow:0 16px 45px rgba(239,17,26,.28);
+  font-size:20px;
+}
+.instagram-reel-fallback strong{
+  font-family:"Manrope",sans-serif;
+  font-size:24px;
+  letter-spacing:-.04em;
+}
+.instagram-reel-fallback small{
+  color:rgba(255,255,255,.56);
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+}
+@media(max-width:620px){
+  .instagram-embed-shell{min-height:620px}
+  .instagram-reel-fallback strong{font-size:20px}
+}
