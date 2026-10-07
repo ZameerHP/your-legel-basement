@@ -186,69 +186,63 @@
     window.ScrollTrigger?.refresh();
   });
 
-  const instagramShell = document.querySelector('[data-instagram-shell]');
-  const instagramBlockquote = instagramShell?.querySelector('.instagram-official-embed');
+  const reelShell = document.querySelector('[data-reel-shell]');
+  const reelVideo = reelShell?.querySelector('.ylb-reel-video');
+  const reelFallback = reelShell?.querySelector('.ylb-reel-drive-fallback');
 
-  if (instagramShell && instagramBlockquote) {
-    let instagramStarted = false;
+  if (reelShell && reelVideo) {
+    let reelStarted = false;
+    let fallbackTimer = null;
 
-    const markInstagramReady = () => {
-      const frame = instagramShell.querySelector('iframe');
-      if (frame) {
-        instagramShell.classList.add('is-ready');
-        instagramShell.classList.remove('is-fallback');
-        return true;
+    const showDriveFallback = () => {
+      reelShell.classList.add('use-drive-fallback');
+      if (reelFallback && !reelFallback.src) {
+        reelFallback.src = reelFallback.dataset.src;
       }
-      return false;
     };
 
-    const loadInstagramEmbed = () => {
-      if (instagramStarted) return;
-      instagramStarted = true;
+    const startReel = () => {
+      if (reelStarted) return;
+      reelStarted = true;
 
-      const processEmbed = () => {
-        try {
-          window.instgrm?.Embeds?.process?.();
-        } catch (_) {}
-        window.setTimeout(markInstagramReady, 700);
-        window.setTimeout(() => {
-          if (!markInstagramReady()) instagramShell.classList.add('is-fallback');
-        }, 9000);
-      };
-
-      if (window.instgrm?.Embeds) {
-        processEmbed();
-        return;
+      const src = reelVideo.dataset.src;
+      if (src) {
+        reelVideo.src = src;
+        reelVideo.removeAttribute('data-src');
+        reelVideo.load();
       }
 
-      let script = document.querySelector('script[data-ylb-instagram-embed]');
-      if (!script) {
-        script = document.createElement('script');
-        script.src = 'https://www.instagram.com/embed.js';
-        script.async = true;
-        script.defer = true;
-        script.dataset.ylbInstagramEmbed = 'true';
-        script.onload = processEmbed;
-        script.onerror = () => instagramShell.classList.add('is-fallback');
-        document.body.appendChild(script);
-      } else {
-        script.addEventListener('load', processEmbed, { once:true });
-      }
+      const tryPlay = () => reelVideo.play().catch(() => {});
+      reelVideo.addEventListener('loadeddata', () => {
+        reelShell.classList.add('reel-ready');
+        window.clearTimeout(fallbackTimer);
+        tryPlay();
+      }, { once:true });
+
+      reelVideo.addEventListener('canplay', () => {
+        reelShell.classList.add('reel-ready');
+        window.clearTimeout(fallbackTimer);
+        tryPlay();
+      }, { once:true });
+
+      reelVideo.addEventListener('error', showDriveFallback, { once:true });
+      fallbackTimer = window.setTimeout(() => {
+        if (reelVideo.readyState < 2) showDriveFallback();
+      }, 6500);
     };
 
     if ('IntersectionObserver' in window) {
-      const instagramObserver = new IntersectionObserver((entries, observer) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          loadInstagramEmbed();
+      const reelObserver = new IntersectionObserver((entries, observer) => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          startReel();
           observer.disconnect();
         }
-      }, { rootMargin:'650px 0px' });
-      instagramObserver.observe(instagramShell);
+      }, { rootMargin:'700px 0px' });
+      reelObserver.observe(reelShell);
     } else {
-      loadInstagramEmbed();
+      startReel();
     }
   }
-
 
   const drivePhoto = (id, alt, fallback) => ({
     src: `https://drive.google.com/thumbnail?id=${id}&sz=w1600`,
