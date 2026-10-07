@@ -185,6 +185,29 @@
     closeMenu();
     window.ScrollTrigger?.refresh();
   });
+
+  const instagramEmbed = document.querySelector('.instagram-embed[data-src]');
+  if (instagramEmbed) {
+    const loadInstagramEmbed = () => {
+      if (instagramEmbed.src) return;
+      instagramEmbed.src = instagramEmbed.dataset.src;
+      instagramEmbed.removeAttribute('data-src');
+    };
+
+    if ('IntersectionObserver' in window) {
+      const instagramObserver = new IntersectionObserver((entries, observer) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          loadInstagramEmbed();
+          observer.disconnect();
+        }
+      }, { rootMargin: '500px 0px' });
+      instagramObserver.observe(instagramEmbed);
+    } else {
+      loadInstagramEmbed();
+    }
+  }
+
+
   const projectPortfolio = {
     adrian: {
       title: 'Project Adrian',
