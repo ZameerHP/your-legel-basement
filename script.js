@@ -77,12 +77,14 @@
       .from('.site-header',{y:-24,opacity:0,duration:.62},'-=1.08')
       .from('.hero-eyebrow',{x:-46,opacity:0,duration:.62},'-=.9')
       .from('.hero-proof',{x:42,opacity:0,duration:.58},'-=.58')
-      .from('.hero-title span:first-child',{x:-86,opacity:0,rotate:.8,duration:.88},'-=.34')
-      .from('.hero-title span:last-child',{x:92,opacity:0,rotate:-.8,duration:.92},'-=.72')
+      .from('.hero-title span:first-child',{x:-72,opacity:0,rotate:.45,duration:.86},'-=.34')
+      .from('.hero-title span:last-child',{x:76,opacity:0,rotate:-.45,duration:.9},'-=.72')
       .from('.hero-rule span',{scaleX:0,transformOrigin:'left',duration:.66},'-=.45')
       .from('.hero-rule i',{opacity:0,x:14,duration:.45},'-=.45')
-      .from('.hero-bottom p',{x:-34,opacity:0,duration:.62},'-=.28')
-      .from('.hero-ctas .button',{x:34,opacity:0,duration:.58,stagger:.08},'-=.52')
+      .from('.hero-copy-label',{x:-18,opacity:0,duration:.42},'-=.3')
+      .from('.hero-bottom p',{x:-28,opacity:0,duration:.58},'-=.34')
+      .from('.hero-trust-pill',{x:24,opacity:0,duration:.5},'-=.46')
+      .from('.hero-ctas .button',{x:28,opacity:0,duration:.55,stagger:.07},'-=.4')
       .from('.hero-stats > div',{y:24,opacity:0,duration:.5,stagger:.09},'-=.26')
       .from('.scroll-cue',{opacity:0,y:-10,duration:.4},'-=.28');
 
