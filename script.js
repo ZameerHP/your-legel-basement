@@ -186,12 +186,54 @@
     window.ScrollTrigger?.refresh();
   });
 
-  const instagramEmbed = document.querySelector('.instagram-embed[data-src]');
-  if (instagramEmbed) {
+  const instagramShell = document.querySelector('[data-instagram-shell]');
+  const instagramBlockquote = instagramShell?.querySelector('.instagram-official-embed');
+
+  if (instagramShell && instagramBlockquote) {
+    let instagramStarted = false;
+
+    const markInstagramReady = () => {
+      const frame = instagramShell.querySelector('iframe');
+      if (frame) {
+        instagramShell.classList.add('is-ready');
+        instagramShell.classList.remove('is-fallback');
+        return true;
+      }
+      return false;
+    };
+
     const loadInstagramEmbed = () => {
-      if (instagramEmbed.src) return;
-      instagramEmbed.src = instagramEmbed.dataset.src;
-      instagramEmbed.removeAttribute('data-src');
+      if (instagramStarted) return;
+      instagramStarted = true;
+
+      const processEmbed = () => {
+        try {
+          window.instgrm?.Embeds?.process?.();
+        } catch (_) {}
+        window.setTimeout(markInstagramReady, 700);
+        window.setTimeout(() => {
+          if (!markInstagramReady()) instagramShell.classList.add('is-fallback');
+        }, 9000);
+      };
+
+      if (window.instgrm?.Embeds) {
+        processEmbed();
+        return;
+      }
+
+      let script = document.querySelector('script[data-ylb-instagram-embed]');
+      if (!script) {
+        script = document.createElement('script');
+        script.src = 'https://www.instagram.com/embed.js';
+        script.async = true;
+        script.defer = true;
+        script.dataset.ylbInstagramEmbed = 'true';
+        script.onload = processEmbed;
+        script.onerror = () => instagramShell.classList.add('is-fallback');
+        document.body.appendChild(script);
+      } else {
+        script.addEventListener('load', processEmbed, { once:true });
+      }
     };
 
     if ('IntersectionObserver' in window) {
@@ -200,8 +242,8 @@
           loadInstagramEmbed();
           observer.disconnect();
         }
-      }, { rootMargin: '500px 0px' });
-      instagramObserver.observe(instagramEmbed);
+      }, { rootMargin:'650px 0px' });
+      instagramObserver.observe(instagramShell);
     } else {
       loadInstagramEmbed();
     }
