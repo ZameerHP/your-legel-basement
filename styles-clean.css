@@ -1759,3 +1759,218 @@ button,a,input,select,textarea{min-width:0}
     bottom:18px;
   }
 }
+
+
+/* Realistic phone hardware refinement */
+.reel-orb-a{
+  display:none!important;
+}
+.instagram-device{
+  position:relative!important;
+  width:min(100%,330px)!important;
+  padding:7px!important;
+  border-radius:42px!important;
+  overflow:visible!important;
+  background:
+    linear-gradient(145deg,#3a3a3a 0%,#121212 16%,#050505 58%,#232323 100%)!important;
+  border:1px solid rgba(255,255,255,.2)!important;
+  box-shadow:
+    0 38px 85px rgba(28,19,13,.27),
+    0 10px 30px rgba(239,17,26,.08),
+    inset 0 1px 0 rgba(255,255,255,.24),
+    inset 0 -1px 0 rgba(255,255,255,.06)!important;
+}
+.instagram-device:before{
+  content:"";
+  position:absolute;
+  inset:3px;
+  z-index:0;
+  border-radius:39px;
+  border:1px solid rgba(255,255,255,.055);
+  pointer-events:none;
+}
+.instagram-device:after{
+  content:"";
+  position:absolute;
+  z-index:12;
+  left:50%;
+  bottom:6px;
+  width:92px;
+  height:4px;
+  transform:translateX(-50%);
+  border-radius:99px;
+  background:rgba(255,255,255,.82);
+  box-shadow:0 1px 5px rgba(0,0,0,.34);
+  pointer-events:none;
+}
+.phone-dynamic-island{
+  position:absolute;
+  z-index:20;
+  top:11px;
+  left:50%;
+  width:86px;
+  height:24px;
+  transform:translateX(-50%);
+  border-radius:999px;
+  background:#000;
+  border:1px solid rgba(255,255,255,.035);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,.035),
+    0 1px 3px rgba(0,0,0,.6);
+  pointer-events:none;
+}
+.phone-dynamic-island i{
+  position:absolute;
+  right:9px;
+  top:50%;
+  width:7px;
+  height:7px;
+  transform:translateY(-50%);
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 35%,#23435f 0 18%,#071018 25% 58%,#000 68%);
+  box-shadow:0 0 4px rgba(56,121,177,.25);
+}
+.phone-hardware{
+  position:absolute;
+  z-index:1;
+  display:block;
+  background:linear-gradient(90deg,#151515,#494949 45%,#101010);
+  border-radius:3px;
+  pointer-events:none;
+}
+.phone-action{
+  left:-4px;
+  top:92px;
+  width:4px;
+  height:25px;
+}
+.phone-volume-up{
+  left:-4px;
+  top:135px;
+  width:4px;
+  height:43px;
+}
+.phone-volume-down{
+  left:-4px;
+  top:186px;
+  width:4px;
+  height:43px;
+}
+.phone-power{
+  right:-4px;
+  top:145px;
+  width:4px;
+  height:68px;
+  background:linear-gradient(90deg,#111,#4a4a4a);
+}
+.instagram-device-top{
+  position:relative;
+  z-index:5;
+  height:58px!important;
+  padding:17px 10px 0!important;
+  border-radius:35px 35px 0 0;
+  background:#090909;
+}
+.instagram-mini-avatar{
+  width:31px!important;
+  height:31px!important;
+}
+.instagram-mini-brand strong{
+  font-size:10px!important;
+}
+.instagram-mini-brand small{
+  font-size:7px!important;
+}
+.instagram-embed-shell{
+  position:relative;
+  z-index:4;
+  aspect-ratio:9/16!important;
+  border-radius:31px!important;
+  overflow:hidden!important;
+  background:#060606!important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.045),
+    0 0 0 1px rgba(0,0,0,.9)!important;
+}
+.ylb-reel-video,
+.ylb-reel-drive-fallback{
+  border-radius:29px!important;
+}
+.reel-open-overlay{
+  left:13px!important;
+  right:13px!important;
+  bottom:15px!important;
+  padding:9px 11px!important;
+  background:rgba(5,5,5,.58)!important;
+  box-shadow:0 7px 22px rgba(0,0,0,.18);
+}
+.instagram-device-footer{
+  position:relative;
+  z-index:5;
+  min-height:50px!important;
+  padding:0 15px 8px!important;
+  border-radius:0 0 35px 35px;
+  background:#090909;
+}
+
+/* Keep decorative circles behind the phone only */
+.instagram-media:before,
+.instagram-media:after,
+.instagram-accent{
+  z-index:-1!important;
+}
+.instagram-media:before{
+  right:-38px!important;
+  top:70px!important;
+}
+.instagram-accent-one{
+  top:8px!important;
+  right:-78px!important;
+}
+.reel-orb-b{
+  display:none!important;
+}
+
+@media(max-width:980px){
+  .instagram-device{
+    width:min(100%,318px)!important;
+  }
+}
+@media(max-width:620px){
+  .instagram-device{
+    width:min(82vw,292px)!important;
+    padding:6px!important;
+    border-radius:38px!important;
+  }
+  .instagram-device:before{border-radius:35px}
+  .instagram-device-top{
+    height:54px!important;
+    padding-top:16px!important;
+    border-radius:31px 31px 0 0;
+  }
+  .phone-dynamic-island{
+    top:9px;
+    width:76px;
+    height:21px;
+  }
+  .instagram-embed-shell{
+    border-radius:27px!important;
+  }
+  .ylb-reel-video,
+  .ylb-reel-drive-fallback{
+    border-radius:25px!important;
+  }
+  .instagram-device-footer{
+    min-height:47px!important;
+    border-radius:0 0 31px 31px;
+  }
+  .phone-action{top:82px}
+  .phone-volume-up{top:121px;height:38px}
+  .phone-volume-down{top:166px;height:38px}
+  .phone-power{top:130px;height:60px}
+  .instagram-media:before{
+    right:-55px!important;
+    top:96px!important;
+  }
+}
