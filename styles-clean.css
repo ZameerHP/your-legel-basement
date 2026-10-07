@@ -433,10 +433,10 @@ img{width:100%;height:auto}
 .projects-intro p{margin:0 0 14px;color:rgba(255,255,255,.62);font-size:15px;line-height:1.7}
 .projects-intro span{display:inline-flex;align-items:center;gap:8px;font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#fff}
 .projects-intro span:before{content:"";width:28px;height:1px;background:var(--red)}
-.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.project-card{appearance:none;border:0;padding:0;background:#151515;color:#fff;text-align:left;position:relative;overflow:hidden;border-radius:18px;cursor:pointer;min-height:430px;isolation:isolate}
-.project-card-wide{grid-column:span 2;min-height:560px}
-.project-card-tall{min-height:520px}
+.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:1180px;margin-inline:auto}
+.project-card{appearance:none;border:0;padding:0;background:#151515;color:#fff;text-align:left;position:relative;overflow:hidden;border-radius:18px;cursor:pointer;min-height:392px;isolation:isolate}
+.project-card-wide{grid-column:span 2;min-height:510px}
+.project-card-tall{min-height:472px}
 .project-image{position:absolute;inset:0;overflow:hidden;background:#181818}
 .project-image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 40%,rgba(0,0,0,.78) 100%)}
 .project-image img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .45s ease}
@@ -470,14 +470,14 @@ body.project-modal-open{overflow:hidden}
 .project-modal-gallery{display:grid;grid-template-columns:1.25fr .75fr;gap:10px}
 .project-modal-image{margin:0;overflow:hidden;border-radius:14px;background:#ddd;min-height:360px}
 .project-modal-image img{width:100%;height:100%;object-fit:cover}
-.project-modal-image-main{min-height:520px}
-.project-modal-gallery .project-modal-image:not(.project-modal-image-main){min-height:520px}
+.project-modal-image-main{min-height:480px}
+.project-modal-gallery .project-modal-image:not(.project-modal-image-main){min-height:480px}
 
 @media(max-width:900px){
   .projects-heading{grid-template-columns:1fr;gap:24px}
   .projects-intro{justify-self:start}
-  .project-card,.project-card-tall{min-height:390px}
-  .project-card-wide{min-height:460px}
+  .project-card,.project-card-tall{min-height:356px}
+  .project-card-wide{min-height:425px}
   .project-modal-copy{grid-template-columns:1fr;gap:24px}
   .project-modal-gallery{grid-template-columns:1fr 1fr}
   .project-modal-image-main,.project-modal-gallery .project-modal-image:not(.project-modal-image-main){min-height:420px}
@@ -485,7 +485,7 @@ body.project-modal-open{overflow:hidden}
 @media(max-width:620px){
   .projects-showcase{padding:68px 0 74px}
   .project-grid{grid-template-columns:1fr;gap:9px}
-  .project-card,.project-card-wide,.project-card-tall{grid-column:auto;min-height:340px;border-radius:14px}
+  .project-card,.project-card-wide,.project-card-tall{grid-column:auto;min-height:315px;border-radius:14px}
   .project-card-copy{left:16px;right:16px;bottom:15px}
   .project-card-copy h3{font-size:29px}
   .project-card-copy i{font-size:9px}
