@@ -52,11 +52,16 @@
     }
 
     const loader = document.querySelector('.page-loader');
+    const unlockPage = () => {
+      document.body.classList.remove('is-loading');
+      loader?.classList.add('is-done');
+    };
+    const loaderFailSafe = window.setTimeout(unlockPage, 4500);
     const launch = gsap.timeline({
       defaults:{ease:'power3.out'},
       onComplete:()=>{
-        document.body.classList.remove('is-loading');
-        loader?.classList.add('is-done');
+        window.clearTimeout(loaderFailSafe);
+        unlockPage();
       }
     });
 
@@ -69,7 +74,8 @@
         .from('.loader-inner small',{opacity:0,y:6,duration:.26},'-=.24')
         .to('.loader-inner',{opacity:0,y:-10,duration:.38,delay:.12,ease:'power2.in'})
         .to(loader,{opacity:0,duration:.42,ease:'power2.out'})
-        .set(loader,{visibility:'hidden'});
+        .set(loader,{visibility:'hidden'})
+        .call(()=>document.body.classList.remove('is-loading'));
     }
 
     launch
@@ -143,7 +149,14 @@
     requestAnimationFrame(raf);
   }
 
-  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) {
+      document.body.classList.remove('is-loading');
+      document.querySelector('.page-loader')?.classList.add('is-done');
+    }
+  });
+
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       const target = document.querySelector(a.getAttribute('href'));
       if (!target) return;
