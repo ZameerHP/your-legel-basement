@@ -112,6 +112,44 @@
       scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:.7}
     });
 
+    const instagramSection = document.querySelector('.instagram-showcase');
+    if (instagramSection) {
+      const instagramDevice = instagramSection.querySelector('.instagram-device');
+      const instagramBgMark = instagramSection.querySelector('.instagram-bg-mark');
+      const instagramOrbitA = instagramSection.querySelector('.instagram-orbit-a');
+      const instagramOrbitB = instagramSection.querySelector('.instagram-orbit-b');
+      const instagramFloatReels = instagramSection.querySelector('.instagram-float-reels');
+      const instagramFloatGta = instagramSection.querySelector('.instagram-float-gta');
+
+      gsap.from('.instagram-kicker-row > *', {
+        y:18, opacity:0, duration:.55, stagger:.07, ease:'power2.out',
+        scrollTrigger:{trigger:instagramSection,start:'top 76%',once:true}
+      });
+
+      if (instagramDevice) {
+        gsap.from(instagramDevice, {
+          y:70, rotate:2.2, scale:.94, opacity:0, duration:1.05, ease:'power3.out',
+          scrollTrigger:{trigger:instagramSection,start:'top 74%',once:true}
+        });
+        gsap.to(instagramDevice, {
+          y:-16, ease:'none',
+          scrollTrigger:{trigger:instagramSection,start:'top bottom',end:'bottom top',scrub:.8}
+        });
+      }
+
+      if (instagramBgMark) {
+        gsap.to(instagramBgMark, {
+          rotate:8, yPercent:10, ease:'none',
+          scrollTrigger:{trigger:instagramSection,start:'top bottom',end:'bottom top',scrub:1}
+        });
+      }
+
+      if (instagramOrbitA) gsap.to(instagramOrbitA,{rotate:360,duration:34,repeat:-1,ease:'none'});
+      if (instagramOrbitB) gsap.to(instagramOrbitB,{rotate:-360,duration:48,repeat:-1,ease:'none'});
+      if (instagramFloatReels) gsap.to(instagramFloatReels,{y:-10,rotate:-1.5,duration:2.8,yoyo:true,repeat:-1,ease:'sine.inOut'});
+      if (instagramFloatGta) gsap.to(instagramFloatGta,{y:11,rotate:1.2,duration:3.2,yoyo:true,repeat:-1,ease:'sine.inOut'});
+    }
+
     document.querySelectorAll('.reveal-up,.reveal-card,.reveal-scale,.reveal-lines').forEach((el) => {
       gsap.from(el, {
         y: el.classList.contains('reveal-scale') ? 0 : 20,
