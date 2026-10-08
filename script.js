@@ -126,28 +126,37 @@
         scrollTrigger:{trigger:instagramSection,start:'top 76%',once:true}
       });
 
+      const instagramDesktopMotion = window.matchMedia('(min-width: 761px)').matches;
+
       if (instagramDevice) {
         gsap.from(instagramDevice, {
-          y:70, rotate:2.2, scale:.94, opacity:0, duration:1.05, ease:'power3.out',
-          scrollTrigger:{trigger:instagramSection,start:'top 74%',once:true}
+          y: instagramDesktopMotion ? 70 : 28,
+          rotate: instagramDesktopMotion ? 2.2 : 0,
+          scale: instagramDesktopMotion ? .94 : .985,
+          opacity:0,
+          duration: instagramDesktopMotion ? 1.05 : .72,
+          ease:'power3.out',
+          scrollTrigger:{trigger:instagramSection,start:'top 78%',once:true}
         });
-        gsap.to(instagramDevice, {
-          y:-16, ease:'none',
-          scrollTrigger:{trigger:instagramSection,start:'top bottom',end:'bottom top',scrub:.8}
-        });
+        if (instagramDesktopMotion) {
+          gsap.to(instagramDevice, {
+            y:-16, ease:'none',
+            scrollTrigger:{trigger:instagramSection,start:'top bottom',end:'bottom top',scrub:.8}
+          });
+        }
       }
 
-      if (instagramBgMark) {
+      if (instagramDesktopMotion && instagramBgMark) {
         gsap.to(instagramBgMark, {
           rotate:8, yPercent:10, ease:'none',
           scrollTrigger:{trigger:instagramSection,start:'top bottom',end:'bottom top',scrub:1}
         });
       }
 
-      if (instagramOrbitA) gsap.to(instagramOrbitA,{rotate:360,duration:34,repeat:-1,ease:'none'});
-      if (instagramOrbitB) gsap.to(instagramOrbitB,{rotate:-360,duration:48,repeat:-1,ease:'none'});
-      if (instagramFloatReels) gsap.to(instagramFloatReels,{y:-10,rotate:-1.5,duration:2.8,yoyo:true,repeat:-1,ease:'sine.inOut'});
-      if (instagramFloatGta) gsap.to(instagramFloatGta,{y:11,rotate:1.2,duration:3.2,yoyo:true,repeat:-1,ease:'sine.inOut'});
+      if (instagramDesktopMotion && instagramOrbitA) gsap.to(instagramOrbitA,{rotate:360,duration:34,repeat:-1,ease:'none'});
+      if (instagramDesktopMotion && instagramOrbitB) gsap.to(instagramOrbitB,{rotate:-360,duration:48,repeat:-1,ease:'none'});
+      if (instagramDesktopMotion && instagramFloatReels) gsap.to(instagramFloatReels,{y:-10,rotate:-1.5,duration:2.8,yoyo:true,repeat:-1,ease:'sine.inOut'});
+      if (instagramDesktopMotion && instagramFloatGta) gsap.to(instagramFloatGta,{y:11,rotate:1.2,duration:3.2,yoyo:true,repeat:-1,ease:'sine.inOut'});
     }
 
     document.querySelectorAll('.reveal-up,.reveal-card,.reveal-scale,.reveal-lines').forEach((el) => {
