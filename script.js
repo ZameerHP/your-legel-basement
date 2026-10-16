@@ -291,6 +291,31 @@
     }
   }
 
+  // Accessible social phone carousel: arrows switch between Instagram and Facebook.
+  const phoneStage = document.querySelector('[data-social-phone-stage]');
+  if (phoneStage) {
+    const panels = [...phoneStage.querySelectorAll('[data-phone-panel]')];
+    const prev = phoneStage.querySelector('[data-phone-prev]');
+    const next = phoneStage.querySelector('[data-phone-next]');
+    const label = phoneStage.querySelector('[data-phone-label]');
+    const counter = phoneStage.querySelector('.social-phone-indicator i');
+    let activePhone = 0;
+    const showPhone = (index) => {
+      activePhone = (index + panels.length) % panels.length;
+      panels.forEach((panel, i) => {
+        panel.classList.toggle('is-active', i === activePhone);
+        panel.setAttribute('aria-hidden', String(i !== activePhone));
+      });
+      if (label) label.textContent = activePhone === 0 ? 'INSTAGRAM' : 'FACEBOOK';
+      if (counter) counter.textContent = `0${activePhone + 1} / 0${panels.length}`;
+      if (prev) prev.setAttribute('aria-label', activePhone === 0 ? 'Show Facebook phone' : 'Show Instagram phone');
+      if (next) next.setAttribute('aria-label', activePhone === 0 ? 'Show Facebook phone' : 'Show Instagram phone');
+    };
+    prev?.addEventListener('click', () => showPhone(activePhone - 1));
+    next?.addEventListener('click', () => showPhone(activePhone + 1));
+    showPhone(0);
+  }
+
   const drivePhoto = (id, alt, fallback) => ({
     src: `https://drive.google.com/thumbnail?id=${id}&sz=w1600`,
     alt,
