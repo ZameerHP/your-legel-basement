@@ -238,15 +238,16 @@
         });
       };
 
+      reelVideo.addEventListener('loadedmetadata', () => {
+        try { reelVideo.currentTime = Math.min(1, Math.max(0, (reelVideo.duration || 1) - 0.05)); } catch (_) {}
+      }, { once: true });
       reelVideo.addEventListener('loadeddata', () => {
         reelShell.classList.add('reel-ready');
         window.clearTimeout(fallbackTimer);
-        tryPlay();
       });
       reelVideo.addEventListener('canplay', () => {
         reelShell.classList.add('reel-ready');
         window.clearTimeout(fallbackTimer);
-        tryPlay();
       });
       reelVideo.addEventListener('error', showDriveFallback);
       reelVideo.addEventListener('stalled', () => {
@@ -262,7 +263,6 @@
         if (reelVideo.readyState < 2) showDriveFallback();
       }, 5000);
       reelVideo.load();
-      tryPlay();
     };
 
     // Load the featured reel immediately; if direct playback is blocked, use the Drive preview.
@@ -282,6 +282,8 @@
     if (phoneLabel) phoneLabel.textContent = activePhone === 'facebook' ? 'Facebook Reel' : 'Instagram Reel';
     const video = phoneStage.querySelector('.ylb-reel-video');
     if (video && activePhone !== 'instagram') video.pause();
+    const facebookFrame = phoneStage.querySelector('iframe[data-facebook-reel-src]');
+    if (facebookFrame && activePhone === 'facebook' && !facebookFrame.src) facebookFrame.src = facebookFrame.dataset.facebookReelSrc;
     phoneStage.querySelectorAll('.ylb-reel-center-control').forEach((button) => {
       const v = button.parentElement?.querySelector('.ylb-reel-video');
       button.classList.toggle('is-playing', Boolean(v && !v.paused));
