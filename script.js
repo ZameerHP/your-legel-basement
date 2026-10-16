@@ -1,23 +1,4 @@
 (() => {
-  // Social reel previews: seek the Instagram clip to the requested 1-second frame.
-  const instagramReel = document.querySelector('.ylb-reel-video');
-  if (instagramReel) {
-    const seekInstagramThumbnail = () => {
-      try { instagramReel.currentTime = Math.min(1, Math.max(0, (instagramReel.duration || 1) - 0.05)); } catch (_) {}
-    };
-    instagramReel.addEventListener('loadedmetadata', seekInstagramThumbnail, { once: true });
-  }
-
-  // Keep the Facebook phone thumbnail visible until the visitor chooses to play.
-  document.querySelectorAll('.facebook-thumbnail-play').forEach((button) => {
-    button.addEventListener('click', () => {
-      const frame = button.parentElement?.querySelector('iframe[data-facebook-reel-src]');
-      if (!frame) return;
-      frame.src = frame.dataset.facebookReelSrc;
-      button.remove();
-    }, { once: true });
-  });
-
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const header = document.querySelector('.site-header');
   const menuToggle = document.querySelector('.menu-toggle');
@@ -288,7 +269,49 @@
     startReel();
   }
 
-  // Instagram and Facebook previews are displayed side by side; no carousel controls or state.
+  // Centered Instagram/Facebook phone carousel with real play/pause behavior.
+  const phoneStage = document.querySelector('[data-social-phone-stage]');
+  const phoneLabel = document.querySelector('.social-phone-current');
+  const phoneButtons = document.querySelectorAll('[data-phone-direction]');
+  let activePhone = 'instagram';
+
+  const setPhone = (name) => {
+    if (!phoneStage) return;
+    activePhone = name === 'facebook' ? 'facebook' : 'instagram';
+    phoneStage.dataset.activePhone = activePhone;
+    if (phoneLabel) phoneLabel.textContent = activePhone === 'facebook' ? 'Facebook Reel' : 'Instagram Reel';
+    const video = phoneStage.querySelector('.ylb-reel-video');
+    if (video && activePhone !== 'instagram') video.pause();
+    phoneStage.querySelectorAll('.ylb-reel-center-control').forEach((button) => {
+      const v = button.parentElement?.querySelector('.ylb-reel-video');
+      button.classList.toggle('is-playing', Boolean(v && !v.paused));
+      button.querySelector('.ylb-reel-center-icon')?.replaceChildren(document.createTextNode(v && !v.paused ? 'Ⅱ' : '▶'));
+      button.setAttribute('aria-label', v && !v.paused ? 'Pause Instagram Reel' : 'Play Instagram Reel');
+    });
+  };
+  phoneButtons.forEach((button) => button.addEventListener('click', () => setPhone(button.dataset.phoneDirection === '1' ? (activePhone === 'instagram' ? 'facebook' : 'instagram') : (activePhone === 'facebook' ? 'instagram' : 'facebook'))));
+  setPhone('instagram');
+
+  const centerPlay = document.querySelector('.ylb-reel-center-control');
+  const syncPlayControl = () => {
+    const video = centerPlay?.parentElement?.querySelector('.ylb-reel-video');
+    if (!video || !centerPlay) return;
+    const playing = !video.paused && !video.ended;
+    centerPlay.classList.toggle('is-playing', playing);
+    centerPlay.querySelector('.ylb-reel-center-icon')?.replaceChildren(document.createTextNode(playing ? 'Ⅱ' : '▶'));
+    centerPlay.setAttribute('aria-label', playing ? 'Pause Instagram Reel' : 'Play Instagram Reel');
+    centerPlay.setAttribute('aria-pressed', String(playing));
+  };
+  if (centerPlay && reelVideo) {
+    centerPlay.addEventListener('click', () => {
+      if (reelVideo.paused) reelVideo.play().catch(() => {});
+      else reelVideo.pause();
+    });
+    reelVideo.addEventListener('play', syncPlayControl);
+    reelVideo.addEventListener('pause', syncPlayControl);
+    reelVideo.addEventListener('ended', syncPlayControl);
+    syncPlayControl();
+  }
 
   const drivePhoto = (id, alt, fallback) => ({
     src: `https://drive.google.com/thumbnail?id=${id}&sz=w1600`,
