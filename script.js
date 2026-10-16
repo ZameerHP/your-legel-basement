@@ -260,59 +260,7 @@
     startReel();
   }
 
-  // Accessible, directional social phone carousel.
-  const phoneStage = document.querySelector('[data-social-phone-stage]');
-  if (phoneStage) {
-    const panels = [...phoneStage.querySelectorAll('[data-phone-panel]')];
-    const prev = phoneStage.querySelector('[data-phone-prev]');
-    const next = phoneStage.querySelector('[data-phone-next]');
-    const label = phoneStage.querySelector('[data-phone-label]');
-    const counter = phoneStage.querySelector('.social-phone-indicator i');
-    let activePhone = 0;
-    let switching = false;
-    const showPhone = (index, direction = 'next') => {
-      if (switching || panels.length < 2) return;
-      const nextIndex = (index + panels.length) % panels.length;
-      switching = true;
-      phoneStage.classList.toggle('phone-direction-prev', direction === 'prev');
-      panels.forEach((panel, i) => {
-        panel.classList.toggle('is-active', i === nextIndex);
-        panel.setAttribute('aria-hidden', String(i !== nextIndex));
-        panel.inert = i !== nextIndex;
-      });
-      activePhone = nextIndex;
-      if (label) label.textContent = activePhone === 0 ? 'INSTAGRAM' : 'FACEBOOK';
-      if (counter) counter.textContent = `0${activePhone + 1} / 0${panels.length}`;
-      if (prev) prev.setAttribute('aria-label', activePhone === 0 ? 'Show Facebook phone' : 'Show Instagram phone');
-      if (next) next.setAttribute('aria-label', activePhone === 0 ? 'Show Facebook phone' : 'Show Instagram phone');
-      window.setTimeout(() => { switching = false; }, 500);
-    };
-    prev?.addEventListener('click', () => showPhone(activePhone - 1, 'prev'));
-    next?.addEventListener('click', () => showPhone(activePhone + 1, 'next'));
-    panels.forEach((panel, i) => { panel.inert = i !== activePhone; panel.setAttribute('aria-hidden', String(i !== activePhone)); });
-    // Explicitly sync the initial active panel without a transition lock.
-    phoneStage.classList.remove('phone-direction-prev');
-    panels.forEach((panel, i) => panel.classList.toggle('is-active', i === activePhone));
-    if (label) label.textContent = 'INSTAGRAM';
-    if (counter) counter.textContent = `01 / 0${panels.length}`;
-    // Start the Reel when the Instagram phone is shown, not only when the section first scrolls into view.
-    const instagramPanel = phoneStage.querySelector('[data-phone-panel="instagram"]');
-    const reel = instagramPanel?.querySelector('[data-reel-shell]');
-    if (reel && 'IntersectionObserver' in window) {
-      const activeReelObserver = new IntersectionObserver(entries => {
-        if (entries.some(entry => entry.isIntersecting)) {
-          const video = reel.querySelector('.ylb-reel-video');
-          if (video && video.dataset.src && !video.src) {
-            video.src = video.dataset.src;
-            video.removeAttribute('data-src');
-            video.load();
-          }
-          activeReelObserver.disconnect();
-        }
-      }, { rootMargin: '500px 0px' });
-      activeReelObserver.observe(reel);
-    }
-  }
+  // Instagram and Facebook previews are displayed side by side; no carousel controls or state.
 
   const drivePhoto = (id, alt, fallback) => ({
     src: `https://drive.google.com/thumbnail?id=${id}&sz=w1600`,
