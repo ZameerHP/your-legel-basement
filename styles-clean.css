@@ -3197,22 +3197,24 @@ button,a,input,select,textarea{min-width:0}
 }
 
 
-/* Social portfolio: switchable Instagram / Facebook phone mockups */
-.social-phone-stage{position:relative;display:flex;flex-direction:column;align-items:center;width:100%;min-width:0}
-.social-phone-controls{width:min(100%,390px);display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 auto 18px;position:relative;z-index:8}
-.social-phone-arrow{display:grid;place-items:center;width:46px;height:46px;flex:0 0 46px;border:1px solid rgba(15,15,15,.14);border-radius:50%;background:#fff;color:#111;font-size:25px;line-height:1;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.08);transition:transform .2s,background .2s,color .2s,border-color .2s}
-.social-phone-arrow:hover{transform:translateY(-2px);background:#111;color:#fff;border-color:#111}
-.social-phone-indicator{display:flex;flex-direction:column;align-items:center;gap:2px;color:#171717;letter-spacing:.13em;font-size:10px}
+/* Social portfolio carousel: one centered phone at a time, with directional slide transitions */
+.social-phone-stage{position:relative;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;align-items:start;justify-items:center;width:100%;min-width:0;isolation:isolate}
+.social-phone-controls{grid-row:1;grid-column:1;width:min(100%,390px);display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 auto 20px;position:relative;z-index:8}
+.social-phone-arrow{display:grid;place-items:center;width:46px;height:46px;flex:0 0 46px;border:1px solid rgba(15,15,15,.13);border-radius:50%;background:#fff;color:#111;font-size:25px;line-height:1;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.08);transition:transform .22s ease,background .22s ease,color .22s ease,border-color .22s ease,box-shadow .22s ease}
+.social-phone-arrow:hover{transform:scale(1.07);background:#111;color:#fff;border-color:#111;box-shadow:0 12px 28px rgba(0,0,0,.15)}
+.social-phone-arrow:active{transform:scale(.94)}
+.social-phone-arrow:focus-visible{outline:3px solid #ef111a;outline-offset:4px}
+.social-phone-indicator{display:flex;flex-direction:column;align-items:center;gap:3px;color:#171717;letter-spacing:.13em;font-size:10px}
 .social-phone-indicator b{font-size:11px;font-weight:800}
 .social-phone-indicator i{font-style:normal;color:#777;font-size:9px;letter-spacing:.1em}
-.social-phone-panel{display:none!important;margin-inline:auto}
-.social-phone-panel.is-active{display:flex!important;animation:socialPhoneIn .32s ease both}
-@keyframes socialPhoneIn{from{opacity:0;transform:translateY(9px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.social-phone-panel{grid-row:2;grid-column:1;display:flex!important;position:relative;align-self:start;justify-self:center;opacity:0;transform:translateX(105%);pointer-events:none;z-index:0;transition:transform .48s cubic-bezier(.22,.75,.22,1),opacity .34s ease;will-change:transform,opacity;margin-inline:auto}
+.social-phone-panel.is-active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:2}
+.social-phone-stage.phone-direction-prev .social-phone-panel:not(.is-active){transform:translateX(-105%)}
 .facebook-device.social-phone-panel{flex-direction:column}
 @media(max-width:760px){
  .social-phone-controls{width:min(100%,340px);margin-bottom:14px}
  .social-phone-arrow{width:42px;height:42px;flex-basis:42px}
- .social-phone-panel{max-width:100%}
+ .social-phone-panel{max-width:100%;width:100%}
  .instagram-device,.facebook-device{margin-inline:auto}
 }
-@media(prefers-reduced-motion:reduce){.social-phone-panel.is-active{animation:none}.social-phone-arrow{transition:none}}
+@media(prefers-reduced-motion:reduce){.social-phone-panel{transition:none;transform:none!important}.social-phone-arrow{transition:none}}
