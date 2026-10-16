@@ -253,20 +253,11 @@
       reelVideo.addEventListener('stalled', () => { if (reelVideo.readyState < 2) showDriveFallback(); }, { once:true });
       fallbackTimer = window.setTimeout(() => {
         if (reelVideo.readyState < 2) showDriveFallback();
-      }, 6500);
+      }, 2800);
     };
 
-    if ('IntersectionObserver' in window) {
-      const reelObserver = new IntersectionObserver((entries, observer) => {
-        if (entries.some(entry => entry.isIntersecting)) {
-          startReel();
-          observer.disconnect();
-        }
-      }, { rootMargin:'700px 0px' });
-      reelObserver.observe(reelShell);
-    } else {
-      startReel();
-    }
+    // Start loading immediately so the Instagram phone never stays blank while waiting for scroll observation.
+    startReel();
   }
 
   // Accessible, directional social phone carousel.
