@@ -114,37 +114,14 @@
 
     const instagramSection = document.querySelector('.instagram-showcase');
     if (instagramSection) {
-      const instagramDevice = instagramSection.querySelector('.instagram-device');
+      // Do not animate the phone panel with GSAP: its opacity/transform are controlled by the carousel.
+      // GSAP inline transforms/opacity previously overrode the carousel state and could hide the Instagram phone.
       const instagramBgMark = instagramSection.querySelector('.instagram-bg-mark');
       const instagramOrbitA = instagramSection.querySelector('.instagram-orbit-a');
       const instagramOrbitB = instagramSection.querySelector('.instagram-orbit-b');
       const instagramFloatReels = instagramSection.querySelector('.instagram-float-reels');
       const instagramFloatGta = instagramSection.querySelector('.instagram-float-gta');
-
-      gsap.from('.instagram-kicker-row > *', {
-        y:18, opacity:0, duration:.55, stagger:.07, ease:'power2.out',
-        scrollTrigger:{trigger:instagramSection,start:'top 76%',once:true}
-      });
-
       const instagramDesktopMotion = window.matchMedia('(min-width: 761px)').matches;
-
-      if (instagramDevice) {
-        gsap.from(instagramDevice, {
-          y: instagramDesktopMotion ? 70 : 28,
-          rotate: instagramDesktopMotion ? 2.2 : 0,
-          scale: instagramDesktopMotion ? .94 : .985,
-          opacity:0,
-          duration: instagramDesktopMotion ? 1.05 : .72,
-          ease:'power3.out',
-          scrollTrigger:{trigger:instagramSection,start:'top 78%',once:true}
-        });
-        if (instagramDesktopMotion) {
-          gsap.to(instagramDevice, {
-            y:-16, ease:'none',
-            scrollTrigger:{trigger:instagramSection,start:'top bottom',end:'bottom top',scrub:.8}
-          });
-        }
-      }
 
       if (instagramDesktopMotion && instagramBgMark) {
         gsap.to(instagramBgMark, {
@@ -273,6 +250,7 @@
       }, { once:true });
 
       reelVideo.addEventListener('error', showDriveFallback, { once:true });
+      reelVideo.addEventListener('stalled', () => { if (reelVideo.readyState < 2) showDriveFallback(); }, { once:true });
       fallbackTimer = window.setTimeout(() => {
         if (reelVideo.readyState < 2) showDriveFallback();
       }, 6500);
@@ -321,7 +299,28 @@
     prev?.addEventListener('click', () => showPhone(activePhone - 1, 'prev'));
     next?.addEventListener('click', () => showPhone(activePhone + 1, 'next'));
     panels.forEach((panel, i) => { panel.inert = i !== activePhone; panel.setAttribute('aria-hidden', String(i !== activePhone)); });
-    showPhone(0);
+    // Explicitly sync the initial active panel without a transition lock.
+    phoneStage.classList.remove('phone-direction-prev');
+    panels.forEach((panel, i) => panel.classList.toggle('is-active', i === activePhone));
+    if (label) label.textContent = 'INSTAGRAM';
+    if (counter) counter.textContent = `01 / 0${panels.length}`;
+    // Start the Reel when the Instagram phone is shown, not only when the section first scrolls into view.
+    const instagramPanel = phoneStage.querySelector('[data-phone-panel="instagram"]');
+    const reel = instagramPanel?.querySelector('[data-reel-shell]');
+    if (reel && 'IntersectionObserver' in window) {
+      const activeReelObserver = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          const video = reel.querySelector('.ylb-reel-video');
+          if (video && video.dataset.src && !video.src) {
+            video.src = video.dataset.src;
+            video.removeAttribute('data-src');
+            video.load();
+          }
+          activeReelObserver.disconnect();
+        }
+      }, { rootMargin: '500px 0px' });
+      activeReelObserver.observe(reel);
+    }
   }
 
   const drivePhoto = (id, alt, fallback) => ({
