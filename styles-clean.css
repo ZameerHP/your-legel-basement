@@ -3557,3 +3557,48 @@ button,a,input,select,textarea{min-width:0}
   .social-phone-stage .instagram-mini-brand strong{font-size:5px!important}
   .social-phone-stage .instagram-mini-brand small{font-size:4px!important}
 }
+
+
+/* Laptop + desktop: center the complete Instagram/Facebook phone pair inside its column. */
+.instagram-layout > .instagram-media,
+.instagram-layout .instagram-media{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  justify-items:unset!important;
+  width:100%!important;
+  min-width:0!important;
+  margin-inline:auto!important;
+  justify-self:center!important;
+  box-sizing:border-box!important;
+}
+.instagram-media > .social-phone-stage{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,340px))!important;
+  justify-content:center!important;
+  justify-items:center!important;
+  align-items:start!important;
+  width:min(100%,720px)!important;
+  max-width:720px!important;
+  margin:0 auto!important;
+  padding-inline:0!important;
+  box-sizing:border-box!important;
+}
+.instagram-media .social-phone-stage > [data-phone-panel]{
+  width:100%!important;
+  max-width:340px!important;
+  min-width:0!important;
+  margin:0!important;
+  justify-self:center!important;
+  transform:none!important;
+}
+@media(max-width:760px){
+  .instagram-media > .social-phone-stage{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    width:100%!important;
+    max-width:560px!important;
+    gap:clamp(6px,2vw,12px)!important;
+  }
+  .instagram-media .social-phone-stage > [data-phone-panel]{max-width:none!important}
+}
