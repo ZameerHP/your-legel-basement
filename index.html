@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="styles-1.css" />
   <link rel="stylesheet" href="styles-2.css" />
   <link rel="stylesheet" href="styles-3.css" />
-  <link rel="stylesheet" href="styles-clean.css?v=29" />
+  <link rel="stylesheet" href="styles-clean.css?v=30" />
 </head>
 <body class="is-loading">
   <div class="page-loader" aria-hidden="true"><div class="loader-inner"><span class="loader-kicker">Yours Legal Basement</span><div class="loader-mark"><span>YOURS</span><strong>LEGAL BASEMENT</strong></div><div class="loader-line"><i></i></div><small>Design · Renovate · Finish</small></div></div>
@@ -152,7 +152,12 @@
             <span class="instagram-float-dot"></span><div><small>ACTIVE</small><strong>GTA Projects</strong></div>
           </div>
 
-          <div class="social-phone-stage" data-social-phone-stage>
+          <div class="social-phone-carousel" aria-label="Choose social video">
+            <button type="button" class="social-phone-arrow" data-phone-direction="-1" aria-label="Show previous social video">‹</button>
+            <span class="social-phone-current" aria-live="polite">Instagram Reel</span>
+            <button type="button" class="social-phone-arrow" data-phone-direction="1" aria-label="Show next social video">›</button>
+          </div>
+          <div class="social-phone-stage" data-social-phone-stage data-active-phone="instagram">
           <div class="instagram-device" data-phone-panel="instagram">
             <span class="phone-hardware phone-action" aria-hidden="true"></span>
             <span class="phone-hardware phone-volume-up" aria-hidden="true"></span>
@@ -179,10 +184,13 @@
                 playsinline
                 controls
                 preload="none"
-                poster="https://scontent.fkhi6-2.fna.fbcdn.net/v/t1.15752-9/850667859_2453020275222612_7812802037465089383_n.jpg?_nc_cat=109&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=fc17b8&_nc_ohc=n1oj7r0xvksQ7kNvwEbHQPP&_nc_oc=AdoxmatZsmOxIR79TwfeiV7yvVw5ONDGoPaFIxLYIhptJJhcTz7FlwE2MJjZ2PHjW80&_nc_zt=23&_nc_ht=scontent.fkhi6-2.fna&_nc_ss=7b6a8&oh=03_Q7cD6gEBrzzDJDY1h8n3hR5UO3tnKH80-ZFFPiFonvF0lSE7oQ&oe=6AF970B3"
+                
                 aria-label="Yours Legal Basement project Reel"
                 data-src="https://drive.google.com/uc?export=download&id=19nPKB_ORUDXCGQShWsLjuz0S4zuZLFyW">
               </video>
+              <button type="button" class="ylb-reel-center-control" aria-label="Play Instagram Reel" aria-pressed="false">
+                <span class="ylb-reel-center-icon" aria-hidden="true">▶</span>
+              </button>
 
               <iframe
                 class="ylb-reel-drive-fallback"
@@ -193,10 +201,7 @@
                 allowfullscreen>
               </iframe>
 
-              <a class="reel-open-overlay" href="https://www.instagram.com/reel/DdW5MXEqON9/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA==" target="_blank" rel="noopener noreferrer" aria-label="Open this Reel on Instagram">
-                <span class="reel-overlay-instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2"></rect><circle cx="12" cy="12" r="4.1"></circle><circle cx="17.45" cy="6.65" r="1.05" class="instagram-dot"></circle></svg></span>
-                <span>Instagram Reel</span><i>↗</i>
-              </a>
+              <a class="reel-open-overlay" href="https://www.instagram.com/reel/DdW5MXEqON9/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA==" target="_blank" rel="noopener noreferrer" aria-label="Open this Reel on Instagram"><span>Open on Instagram</span><i>↗</i></a>
             </div>
 
             <a class="instagram-device-footer" href="https://www.instagram.com/reel/DdW5MXEqON9/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA==" target="_blank" rel="noopener noreferrer">
@@ -221,9 +226,6 @@
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                 title="Yours Legal Basement Facebook Reel">
               </iframe>
-              <button type="button" class="facebook-thumbnail-play" aria-label="Play Facebook Reel" style="position:absolute;inset:0;z-index:2;width:100%;height:100%;padding:0;border:0;cursor:pointer;background:#111 url('https://scontent.fkhi6-2.fna.fbcdn.net/v/t1.15752-9/850667859_2453020275222612_7812802037465089383_n.jpg?_nc_cat=109&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=fc17b8&_nc_ohc=n1oj7r0xvksQ7kNvwEbHQPP&_nc_oc=AdoxmatZsmOxIR79TwfeiV7yvVw5ONDGoPaFIxLYIhptJJhcTz7FlwE2MJjZ2PHjW80&_nc_zt=23&_nc_ht=scontent.fkhi6-2.fna&_nc_ss=7b6a8&oh=03_Q7cD6gEBrzzDJDY1h8n3hR5UO3tnKH80-ZFFPiFonvF0lSE7oQ&oe=6AF970B3') center center / cover no-repeat;display:grid;place-items:center;">
-                <span aria-hidden="true" style="display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.8);color:#fff;font-size:28px;padding-left:4px;box-shadow:0 8px 30px rgba(0,0,0,.35);">▶</span>
-              </button>
             </div>
             <a class="facebook-device-footer" href="https://www.facebook.com/reel/1928343987771014/" target="_blank" rel="noopener noreferrer">
               <span><b>f</b> Watch original Reel on Facebook</span><i>↗</i>
