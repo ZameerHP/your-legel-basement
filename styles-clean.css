@@ -3997,6 +3997,17 @@ button,a,input,select,textarea{min-width:0}
   box-sizing:border-box!important;
 }
 
+.social-phone-stage .facebook-embed-shell iframe{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  border:none!important;
+  overflow:hidden!important;
+  z-index:2!important;
+  pointer-events:auto!important;
+}
+
 /* ---- Thumbnail images inside phone screens ---- */
 .phone-thumbnail{
   position:absolute!important;
