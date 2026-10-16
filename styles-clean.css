@@ -3226,3 +3226,12 @@ button,a,input,select,textarea{min-width:0}
 .social-phone-stage>.social-phone-panel:not(.is-active){visibility:hidden;}
 .social-phone-stage>.social-phone-panel.is-active{visibility:visible;}
 .social-phone-controls{grid-area:1/1!important;}
+
+
+/* Keep carousel state authoritative: GSAP must not override phone visibility or horizontal slide transforms. */
+.social-phone-stage{position:relative;overflow:hidden;isolation:isolate;}
+.social-phone-stage>.social-phone-panel{grid-area:2/1!important;align-self:start;justify-self:center;opacity:0;visibility:hidden;pointer-events:none;}
+.social-phone-stage>.social-phone-panel.is-active{opacity:1;visibility:visible;pointer-events:auto;}
+.social-phone-stage>.social-phone-panel:not(.is-active){aria-hidden:true;}
+.instagram-embed-shell{background:#111;}
+.ylb-reel-video{background:#111;object-fit:cover;}
