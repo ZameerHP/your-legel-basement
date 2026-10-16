@@ -304,7 +304,6 @@
     const showPhone = (index, direction = 'next') => {
       if (switching || panels.length < 2) return;
       const nextIndex = (index + panels.length) % panels.length;
-      if (nextIndex === activePhone && panels[activePhone]?.classList.contains('is-active')) return;
       switching = true;
       phoneStage.classList.toggle('phone-direction-prev', direction === 'prev');
       panels.forEach((panel, i) => {
