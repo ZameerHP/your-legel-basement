@@ -3143,3 +3143,55 @@ button,a,input,select,textarea{min-width:0}
   background:rgba(255,255,255,.72);
   box-shadow:0 14px 34px rgba(24,119,242,.10);
 }
+
+
+/* Facebook Reel phone beside Instagram */
+.facebook-device{
+  position:relative;
+  width:min(100%,320px);
+  max-width:320px;
+  margin:10px auto 0;
+  padding:7px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:36px;
+  background:linear-gradient(145deg,#27292e,#08090b 38%,#1b1d21);
+  box-shadow:0 28px 70px rgba(13,18,28,.24),inset 0 0 0 1px rgba(255,255,255,.08);
+  overflow:hidden;
+}
+.facebook-device-top{
+  height:49px;
+  padding:0 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  color:#16181c;
+  background:#fff;
+  border-radius:28px 28px 0 0;
+}
+.facebook-device-brand{display:flex;align-items:center;gap:8px;font-size:12px}
+.facebook-device-brand b,.facebook-device-footer b{
+  display:inline-grid;place-items:center;
+  width:25px;height:25px;border-radius:50%;
+  color:#fff;background:#1877f2;
+  font-family:Arial,sans-serif;font-size:22px;font-weight:800;line-height:1;
+}
+.facebook-device-menu{font-weight:800;letter-spacing:2px}
+.facebook-embed-shell{
+  width:100%;aspect-ratio:267/476;overflow:hidden;background:#050505;
+}
+.facebook-embed-shell iframe{
+  display:block;width:100%;height:100%;border:0;
+}
+.facebook-device-footer{
+  min-height:40px;padding:0 9px;display:flex;align-items:center;justify-content:space-between;gap:7px;
+  color:#e8eaf0;background:#111318;font-size:7px;font-weight:700;letter-spacing:.06em;text-decoration:none;
+}
+.facebook-device-footer span{display:flex;align-items:center;gap:7px}
+.facebook-device-footer b{width:18px;height:18px;font-size:16px}
+.facebook-device-footer i{font-style:normal;color:#aeb7c7}
+@media(max-width:760px){
+  .facebook-device{width:min(100%,320px);max-width:320px;margin:10px auto 0}
+  .facebook-device-top{height:49px}
+  .facebook-embed-shell{aspect-ratio:9/16}
+  .facebook-device-footer{min-height:38px;font-size:6.5px}
+}
