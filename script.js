@@ -1,4 +1,23 @@
 (() => {
+  // Social reel previews: seek the Instagram clip to the requested 1-second frame.
+  const instagramReel = document.querySelector('.ylb-reel-video');
+  if (instagramReel) {
+    const seekInstagramThumbnail = () => {
+      try { instagramReel.currentTime = Math.min(1, Math.max(0, (instagramReel.duration || 1) - 0.05)); } catch (_) {}
+    };
+    instagramReel.addEventListener('loadedmetadata', seekInstagramThumbnail, { once: true });
+  }
+
+  // Keep the Facebook phone thumbnail visible until the visitor chooses to play.
+  document.querySelectorAll('.facebook-thumbnail-play').forEach((button) => {
+    button.addEventListener('click', () => {
+      const frame = button.parentElement?.querySelector('iframe[data-facebook-reel-src]');
+      if (!frame) return;
+      frame.src = frame.dataset.facebookReelSrc;
+      button.remove();
+    }, { once: true });
+  });
+
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const header = document.querySelector('.site-header');
   const menuToggle = document.querySelector('.menu-toggle');
