@@ -3218,3 +3218,11 @@ button,a,input,select,textarea{min-width:0}
  .instagram-device,.facebook-device{margin-inline:auto}
 }
 @media(prefers-reduced-motion:reduce){.social-phone-panel{transition:none;transform:none!important}.social-phone-arrow{transition:none}}
+
+
+/* Carousel hardening: keep inactive phones clipped and prevent side-by-side/underneath display. */
+.social-phone-stage{display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto!important;overflow:hidden;box-sizing:border-box;padding:2px 0 14px;}
+.social-phone-stage>.social-phone-panel{grid-area:2/1!important;min-width:0;max-width:100%;}
+.social-phone-stage>.social-phone-panel:not(.is-active){visibility:hidden;}
+.social-phone-stage>.social-phone-panel.is-active{visibility:visible;}
+.social-phone-controls{grid-area:1/1!important;}
