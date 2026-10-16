@@ -3995,17 +3995,19 @@ button,a,input,select,textarea{min-width:0}
   flex:0 0 auto!important;
   border-radius:0!important;
   box-sizing:border-box!important;
+  cursor:pointer!important;
 }
 
-.social-phone-stage .facebook-embed-shell iframe{
-  position:absolute!important;
-  inset:0!important;
-  width:100%!important;
-  height:100%!important;
-  border:none!important;
-  overflow:hidden!important;
-  z-index:2!important;
-  pointer-events:auto!important;
+.social-phone-stage .instagram-embed-shell:hover .phone-thumbnail,
+.social-phone-stage .facebook-embed-shell:hover .phone-thumbnail{
+  transform:scale(1.03)!important;
+}
+
+.social-phone-stage .instagram-embed-shell:hover .ylb-reel-center-control,
+.social-phone-stage .facebook-embed-shell:hover .ylb-reel-center-control{
+  background:rgba(239,17,26,.85)!important;
+  border-color:#fff!important;
+  transform:translate(-50%,-50%) scale(1.1)!important;
 }
 
 /* ---- Thumbnail images inside phone screens ---- */
@@ -4019,6 +4021,7 @@ button,a,input,select,textarea{min-width:0}
   display:block!important;
   z-index:5!important;
   border-radius:0!important;
+  transition:transform .4s ease!important;
 }
 .phone-thumbnail.fb-thumb{
   pointer-events:auto!important;
