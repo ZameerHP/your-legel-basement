@@ -291,7 +291,7 @@
     }
   }
 
-  // Accessible social phone carousel: arrows switch between Instagram and Facebook.
+  // Accessible, directional social phone carousel.
   const phoneStage = document.querySelector('[data-social-phone-stage]');
   if (phoneStage) {
     const panels = [...phoneStage.querySelectorAll('[data-phone-panel]')];
@@ -300,19 +300,28 @@
     const label = phoneStage.querySelector('[data-phone-label]');
     const counter = phoneStage.querySelector('.social-phone-indicator i');
     let activePhone = 0;
-    const showPhone = (index) => {
-      activePhone = (index + panels.length) % panels.length;
+    let switching = false;
+    const showPhone = (index, direction = 'next') => {
+      if (switching || panels.length < 2) return;
+      const nextIndex = (index + panels.length) % panels.length;
+      if (nextIndex === activePhone && panels[activePhone]?.classList.contains('is-active')) return;
+      switching = true;
+      phoneStage.classList.toggle('phone-direction-prev', direction === 'prev');
       panels.forEach((panel, i) => {
-        panel.classList.toggle('is-active', i === activePhone);
-        panel.setAttribute('aria-hidden', String(i !== activePhone));
+        panel.classList.toggle('is-active', i === nextIndex);
+        panel.setAttribute('aria-hidden', String(i !== nextIndex));
+        panel.inert = i !== nextIndex;
       });
+      activePhone = nextIndex;
       if (label) label.textContent = activePhone === 0 ? 'INSTAGRAM' : 'FACEBOOK';
       if (counter) counter.textContent = `0${activePhone + 1} / 0${panels.length}`;
       if (prev) prev.setAttribute('aria-label', activePhone === 0 ? 'Show Facebook phone' : 'Show Instagram phone');
       if (next) next.setAttribute('aria-label', activePhone === 0 ? 'Show Facebook phone' : 'Show Instagram phone');
+      window.setTimeout(() => { switching = false; }, 500);
     };
-    prev?.addEventListener('click', () => showPhone(activePhone - 1));
-    next?.addEventListener('click', () => showPhone(activePhone + 1));
+    prev?.addEventListener('click', () => showPhone(activePhone - 1, 'prev'));
+    next?.addEventListener('click', () => showPhone(activePhone + 1, 'next'));
+    panels.forEach((panel, i) => { panel.inert = i !== activePhone; panel.setAttribute('aria-hidden', String(i !== activePhone)); });
     showPhone(0);
   }
 
