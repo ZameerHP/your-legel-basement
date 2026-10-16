@@ -210,108 +210,64 @@
     window.ScrollTrigger?.refresh();
   });
 
-  const reelShell = document.querySelector('[data-reel-shell]');
-  const reelVideo = reelShell?.querySelector('.ylb-reel-video');
-  const reelFallback = reelShell?.querySelector('.ylb-reel-drive-fallback');
 
-  if (reelShell && reelVideo) {
-    let reelStarted = false;
-    let fallbackTimer = null;
-
-    const showDriveFallback = () => {
-      window.clearTimeout(fallbackTimer);
-      reelShell.classList.add('use-drive-fallback');
-      if (reelFallback && !reelFallback.src) {
-        reelFallback.src = reelFallback.dataset.src;
-      }
-    };
-
-    const startReel = () => {
-      if (reelStarted) return;
-      reelStarted = true;
-
-      const tryPlay = () => {
-        if (reelShell.classList.contains('use-drive-fallback')) return;
-        reelVideo.play().catch(() => {
-          // Keep native controls available when autoplay is blocked.
-          reelShell.classList.add('reel-ready');
-        });
-      };
-
-      reelVideo.addEventListener('loadedmetadata', () => {
-        try { reelVideo.currentTime = Math.min(1, Math.max(0, (reelVideo.duration || 1) - 0.05)); } catch (_) {}
-      }, { once: true });
-      reelVideo.addEventListener('loadeddata', () => {
-        reelShell.classList.add('reel-ready');
-        window.clearTimeout(fallbackTimer);
-      });
-      reelVideo.addEventListener('canplay', () => {
-        reelShell.classList.add('reel-ready');
-        window.clearTimeout(fallbackTimer);
-      });
-      reelVideo.addEventListener('error', showDriveFallback);
-      reelVideo.addEventListener('stalled', () => {
-        if (reelVideo.readyState < 2) showDriveFallback();
-      });
-
-      const src = reelVideo.dataset.src;
-      if (src) {
-        reelVideo.src = src;
-        reelVideo.removeAttribute('data-src');
-      }
-      fallbackTimer = window.setTimeout(() => {
-        if (reelVideo.readyState < 2) showDriveFallback();
-      }, 5000);
-      reelVideo.load();
-    };
-
-    // Load the featured reel immediately; if direct playback is blocked, use the Drive preview.
-    startReel();
-  }
-
-  // Centered Instagram/Facebook phone carousel with real play/pause behavior.
-  const phoneStage = document.querySelector('[data-social-phone-stage]');
-  const phoneLabel = document.querySelector('.social-phone-current');
-  const phoneButtons = document.querySelectorAll('[data-phone-direction]');
-  let activePhone = 'instagram';
-
-  const setPhone = (name) => {
-    if (!phoneStage) return;
-    activePhone = name === 'facebook' ? 'facebook' : 'instagram';
-    phoneStage.dataset.activePhone = activePhone;
-    if (phoneLabel) phoneLabel.textContent = activePhone === 'facebook' ? 'Facebook Reel' : 'Instagram Reel';
-    const video = phoneStage.querySelector('.ylb-reel-video');
-    if (video && activePhone !== 'instagram') video.pause();
-    const facebookFrame = phoneStage.querySelector('iframe[data-facebook-reel-src]');
-    if (facebookFrame && activePhone === 'facebook' && !facebookFrame.src) facebookFrame.src = facebookFrame.dataset.facebookReelSrc;
-    phoneStage.querySelectorAll('.ylb-reel-center-control').forEach((button) => {
-      const v = button.parentElement?.querySelector('.ylb-reel-video');
-      button.classList.toggle('is-playing', Boolean(v && !v.paused));
-      button.querySelector('.ylb-reel-center-icon')?.replaceChildren(document.createTextNode(v && !v.paused ? 'Ⅱ' : '▶'));
-      button.setAttribute('aria-label', v && !v.paused ? 'Pause Instagram Reel' : 'Play Instagram Reel');
-    });
-  };
-  phoneButtons.forEach((button) => button.addEventListener('click', () => setPhone(button.dataset.phoneDirection === '1' ? (activePhone === 'instagram' ? 'facebook' : 'instagram') : (activePhone === 'facebook' ? 'instagram' : 'facebook'))));
-  setPhone('instagram');
-
+  // Both phones are always visible — no carousel needed.
+  // Play/pause centered control for Instagram reel with thumbnail.
   const centerPlay = document.querySelector('.ylb-reel-center-control');
+  const reelShellEl = document.querySelector('[data-reel-shell]');
+  const reelVideoEl = reelShellEl?.querySelector('.ylb-reel-video');
+  const reelFallbackEl = reelShellEl?.querySelector('.ylb-reel-drive-fallback');
+  const reelThumbnail = reelShellEl?.querySelector('.phone-thumbnail');
+
   const syncPlayControl = () => {
-    const video = centerPlay?.parentElement?.querySelector('.ylb-reel-video');
-    if (!video || !centerPlay) return;
-    const playing = !video.paused && !video.ended;
+    if (!reelVideoEl || !centerPlay) return;
+    const playing = !reelVideoEl.paused && !reelVideoEl.ended;
     centerPlay.classList.toggle('is-playing', playing);
     centerPlay.querySelector('.ylb-reel-center-icon')?.replaceChildren(document.createTextNode(playing ? 'Ⅱ' : '▶'));
     centerPlay.setAttribute('aria-label', playing ? 'Pause Instagram Reel' : 'Play Instagram Reel');
     centerPlay.setAttribute('aria-pressed', String(playing));
   };
-  if (centerPlay && reelVideo) {
+
+  if (centerPlay && reelVideoEl) {
+    let reelLoaded = false;
     centerPlay.addEventListener('click', () => {
-      if (reelVideo.paused) reelVideo.play().catch(() => {});
-      else reelVideo.pause();
+      if (!reelLoaded) {
+        // First click: load video, hide thumbnail after video is ready
+        reelLoaded = true;
+        const src = reelVideoEl.dataset.src;
+        if (src) {
+          reelVideoEl.src = src;
+          reelVideoEl.removeAttribute('data-src');
+        }
+        reelVideoEl.load();
+        reelVideoEl.addEventListener('canplay', () => {
+          if (reelThumbnail) reelThumbnail.style.display = 'none';
+          reelVideoEl.play().catch(() => {});
+        }, { once: true });
+        reelVideoEl.addEventListener('error', () => {
+          // Fallback: show Drive preview
+          reelShellEl.classList.add('use-drive-fallback');
+          if (reelFallbackEl && !reelFallbackEl.src) {
+            reelFallbackEl.src = reelFallbackEl.dataset.src;
+          }
+        });
+        // Timeout fallback
+        setTimeout(() => {
+          if (reelVideoEl.readyState < 2) {
+            reelShellEl.classList.add('use-drive-fallback');
+            if (reelFallbackEl && !reelFallbackEl.src) {
+              reelFallbackEl.src = reelFallbackEl.dataset.src;
+            }
+          }
+        }, 6000);
+      } else {
+        if (reelVideoEl.paused) reelVideoEl.play().catch(() => {});
+        else reelVideoEl.pause();
+      }
     });
-    reelVideo.addEventListener('play', syncPlayControl);
-    reelVideo.addEventListener('pause', syncPlayControl);
-    reelVideo.addEventListener('ended', syncPlayControl);
+    reelVideoEl.addEventListener('play', syncPlayControl);
+    reelVideoEl.addEventListener('pause', syncPlayControl);
+    reelVideoEl.addEventListener('ended', syncPlayControl);
     syncPlayControl();
   }
 

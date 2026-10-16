@@ -3888,3 +3888,359 @@ button,a,input,select,textarea{min-width:0}
  .instagram-showcase .instagram-media .social-phone-stage[data-social-phone-stage]{max-width:340px!important}
  .instagram-showcase .instagram-media .social-phone-stage>[data-phone-panel]{width:min(100%,320px)!important;max-width:320px!important}
 }
+
+
+/* ============================================================
+   FINAL OVERHAUL: Both phones always visible, responsive,
+   thumbnails, centered play/pause, no arrows
+   ============================================================ */
+
+/* ---- Hide ALL carousel / arrow controls globally ---- */
+.social-phone-carousel,
+.social-phone-controls,
+.social-phone-arrow,
+.social-phone-current,
+.social-phone-indicator{
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  overflow:hidden!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+/* ---- Phone stage: always side-by-side ---- */
+.instagram-showcase .instagram-media .social-phone-stage[data-social-phone-stage],
+.instagram-media>.social-phone-stage,
+.social-phone-stage{
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:clamp(12px,2.5vw,24px)!important;
+  width:100%!important;
+  max-width:680px!important;
+  margin:0 auto!important;
+  padding:8px 0 16px!important;
+  overflow:visible!important;
+}
+
+/* ---- BOTH phones always visible ---- */
+.instagram-showcase .instagram-media .social-phone-stage>[data-phone-panel],
+.social-phone-stage>[data-phone-panel]{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  position:relative!important;
+  flex:1 1 0!important;
+  width:calc((100% - 24px)/2)!important;
+  max-width:320px!important;
+  min-width:0!important;
+  margin:0!important;
+  transform:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+  z-index:2!important;
+  box-sizing:border-box!important;
+}
+
+/* ---- Instagram device styling ---- */
+.social-phone-stage>.instagram-device{
+  padding:clamp(5px,1vw,8px)!important;
+  border-radius:clamp(22px,3vw,38px)!important;
+  background:linear-gradient(145deg,#27292e,#08090b 38%,#1b1d21)!important;
+  border:1px solid rgba(255,255,255,.22)!important;
+  box-shadow:0 28px 70px rgba(13,18,28,.24),inset 0 0 0 1px rgba(255,255,255,.08)!important;
+  overflow:hidden!important;
+}
+
+/* ---- Facebook device styling ---- */
+.social-phone-stage>.facebook-device{
+  padding:clamp(5px,1vw,7px)!important;
+  border-radius:clamp(22px,3vw,36px)!important;
+  background:linear-gradient(145deg,#27292e,#08090b 38%,#1b1d21)!important;
+  border:1px solid rgba(255,255,255,.22)!important;
+  box-shadow:0 28px 70px rgba(13,18,28,.24),inset 0 0 0 1px rgba(255,255,255,.08)!important;
+  overflow:hidden!important;
+}
+
+/* ---- Phone headers (top bars) ---- */
+.social-phone-stage .instagram-device-top,
+.social-phone-stage .facebook-device-top{
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  width:100%!important;
+  height:clamp(38px,5vw,52px)!important;
+  min-height:38px!important;
+  padding:0 clamp(6px,1vw,12px)!important;
+  box-sizing:border-box!important;
+  flex-shrink:0!important;
+}
+
+/* ---- Embed shells: 9:16 responsive ---- */
+.social-phone-stage .instagram-embed-shell,
+.social-phone-stage .facebook-embed-shell{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  aspect-ratio:9/16!important;
+  overflow:hidden!important;
+  background:#080808!important;
+  flex:0 0 auto!important;
+  border-radius:0!important;
+  box-sizing:border-box!important;
+}
+
+/* ---- Thumbnail images inside phone screens ---- */
+.phone-thumbnail{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  display:block!important;
+  z-index:1!important;
+  border-radius:0!important;
+}
+
+/* ---- Video (hidden until played) ---- */
+.social-phone-stage .instagram-embed-shell .ylb-reel-video{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  z-index:3!important;
+  background:#080808!important;
+}
+
+/* ---- Play/Pause button: PERFECTLY CENTERED ---- */
+.ylb-reel-center-control{
+  position:absolute!important;
+  z-index:10!important;
+  top:50%!important;
+  left:50%!important;
+  transform:translate(-50%,-50%)!important;
+  display:grid!important;
+  place-items:center!important;
+  width:clamp(48px,12vw,68px)!important;
+  height:clamp(48px,12vw,68px)!important;
+  border:2px solid rgba(255,255,255,.85)!important;
+  border-radius:50%!important;
+  background:rgba(0,0,0,.55)!important;
+  color:#fff!important;
+  font-size:clamp(18px,5vw,28px)!important;
+  cursor:pointer!important;
+  backdrop-filter:blur(10px)!important;
+  -webkit-backdrop-filter:blur(10px)!important;
+  transition:opacity .25s ease,transform .25s ease,background .25s ease!important;
+  padding:0!important;
+  margin:0!important;
+  line-height:1!important;
+  box-shadow:0 8px 32px rgba(0,0,0,.3)!important;
+}
+.ylb-reel-center-control:hover{
+  background:rgba(239,17,26,.75)!important;
+  border-color:rgba(255,255,255,1)!important;
+  transform:translate(-50%,-50%) scale(1.08)!important;
+}
+.ylb-reel-center-control.is-playing{
+  opacity:.12!important;
+}
+.ylb-reel-center-control.is-playing:hover,
+.ylb-reel-center-control:focus-visible{
+  opacity:1!important;
+}
+.ylb-reel-center-icon{
+  display:block!important;
+  line-height:1!important;
+  padding-left:3px;
+}
+
+/* ---- Hide reel-open-overlay (replaced by thumbnail + centered play) ---- */
+.reel-open-overlay{
+  display:none!important;
+}
+
+/* ---- Phone footers ---- */
+.social-phone-stage .instagram-device-footer,
+.social-phone-stage .facebook-device-footer{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  min-height:clamp(32px,4vw,44px)!important;
+  flex:0 0 auto!important;
+  box-sizing:border-box!important;
+  padding:4px clamp(4px,1vw,8px)!important;
+  font-size:clamp(5px,.7vw,8px)!important;
+  line-height:1.3!important;
+  text-align:center!important;
+  overflow-wrap:anywhere!important;
+}
+
+/* ---- Hide phone hardware buttons + dynamic island (they break small sizes) ---- */
+.phone-hardware,
+.phone-dynamic-island{
+  display:none!important;
+}
+
+/* ---- Hide decorative float cards on all screens ---- */
+.instagram-float-card{
+  display:none!important;
+}
+
+/* ---- Instagram device pseudo-elements that break layout ---- */
+.instagram-device:before,
+.instagram-device:after{
+  display:none!important;
+  content:none!important;
+}
+
+/* ============================================================
+   RESPONSIVE: Tablet (max-width: 980px)
+   ============================================================ */
+@media(max-width:980px){
+  .instagram-showcase .instagram-media .social-phone-stage[data-social-phone-stage],
+  .instagram-media>.social-phone-stage,
+  .social-phone-stage{
+    max-width:560px!important;
+    gap:clamp(10px,2vw,18px)!important;
+  }
+  .social-phone-stage>[data-phone-panel]{
+    max-width:270px!important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE: Mobile (max-width: 639px)
+   ============================================================ */
+@media(max-width:639px){
+  .instagram-showcase .instagram-media .social-phone-stage[data-social-phone-stage],
+  .instagram-media>.social-phone-stage,
+  .social-phone-stage{
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    max-width:100%!important;
+    gap:clamp(8px,2vw,14px)!important;
+    padding:4px 0 10px!important;
+  }
+  .instagram-showcase .instagram-media .social-phone-stage>[data-phone-panel],
+  .social-phone-stage>[data-phone-panel]{
+    flex:1 1 0!important;
+    width:calc((100% - 14px)/2)!important;
+    max-width:none!important;
+  }
+  .social-phone-stage>.instagram-device,
+  .social-phone-stage>.facebook-device{
+    padding:4px!important;
+    border-radius:18px!important;
+  }
+  .social-phone-stage .instagram-device-top,
+  .social-phone-stage .facebook-device-top{
+    height:34px!important;
+    min-height:34px!important;
+    padding:0 4px!important;
+  }
+  .social-phone-stage .instagram-mini-avatar{
+    width:18px!important;height:18px!important;
+  }
+  .social-phone-stage .instagram-mini-brand strong{
+    font-size:clamp(5px,1.8vw,8px)!important;
+  }
+  .social-phone-stage .instagram-mini-brand small{
+    font-size:clamp(4px,1.3vw,6px)!important;
+  }
+  .social-phone-stage .facebook-device-brand{
+    font-size:clamp(7px,2.2vw,10px)!important;
+    gap:4px!important;
+  }
+  .social-phone-stage .facebook-device-brand b{
+    width:18px!important;height:18px!important;font-size:15px!important;
+  }
+  .social-phone-stage .instagram-device-footer,
+  .social-phone-stage .facebook-device-footer{
+    min-height:28px!important;
+    padding:3px!important;
+    font-size:clamp(4px,1.2vw,6px)!important;
+  }
+  .ylb-reel-center-control{
+    width:42px!important;
+    height:42px!important;
+    font-size:16px!important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE: Very small phones (max-width: 420px)
+   ============================================================ */
+@media(max-width:420px){
+  .social-phone-stage>.instagram-device,
+  .social-phone-stage>.facebook-device{
+    padding:3px!important;
+    border-radius:15px!important;
+  }
+  .social-phone-stage .instagram-device-top,
+  .social-phone-stage .facebook-device-top{
+    height:30px!important;
+    min-height:30px!important;
+    padding:0 3px!important;
+  }
+  .social-phone-stage .instagram-mini-avatar{
+    width:16px!important;height:16px!important;
+  }
+  .social-phone-stage .instagram-mini-brand strong{
+    font-size:5px!important;
+  }
+  .social-phone-stage .instagram-mini-brand small{
+    display:none!important;
+  }
+  .social-phone-stage .facebook-device-brand b{
+    width:16px!important;height:16px!important;font-size:13px!important;
+  }
+  .social-phone-stage .instagram-device-footer,
+  .social-phone-stage .facebook-device-footer{
+    min-height:25px!important;
+    font-size:4px!important;
+  }
+  .ylb-reel-center-control{
+    width:36px!important;
+    height:36px!important;
+    font-size:14px!important;
+    border-width:1.5px!important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE: Tiny phones (max-width: 360px)
+   ============================================================ */
+@media(max-width:360px){
+  .social-phone-stage>.instagram-device,
+  .social-phone-stage>.facebook-device{
+    padding:2px!important;
+    border-radius:13px!important;
+  }
+  .social-phone-stage .instagram-device-top,
+  .social-phone-stage .facebook-device-top{
+    height:26px!important;min-height:26px!important;
+  }
+  .social-phone-stage .instagram-mini-avatar{display:none!important}
+  .social-phone-stage .instagram-device-footer,
+  .social-phone-stage .facebook-device-footer{
+    min-height:22px!important;
+    font-size:3.5px!important;
+  }
+  .ylb-reel-center-control{
+    width:30px!important;
+    height:30px!important;
+    font-size:12px!important;
+  }
+}
