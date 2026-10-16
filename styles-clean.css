@@ -4017,8 +4017,12 @@ button,a,input,select,textarea{min-width:0}
   object-fit:cover!important;
   object-position:center center!important;
   display:block!important;
-  z-index:1!important;
+  z-index:5!important;
   border-radius:0!important;
+}
+.phone-thumbnail.fb-thumb{
+  pointer-events:auto!important;
+  cursor:pointer!important;
 }
 
 /* ---- Video (hidden until played) ---- */
@@ -4029,8 +4033,13 @@ button,a,input,select,textarea{min-width:0}
   height:100%!important;
   object-fit:cover!important;
   object-position:center center!important;
-  z-index:3!important;
+  z-index:2!important;
   background:#080808!important;
+  display:none;
+}
+.social-phone-stage .instagram-embed-shell.is-playing-video .ylb-reel-video{
+  display:block!important;
+  z-index:6!important;
 }
 
 /* ---- Play/Pause button: PERFECTLY CENTERED ---- */

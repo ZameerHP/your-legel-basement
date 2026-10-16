@@ -242,6 +242,7 @@
         reelVideoEl.load();
         reelVideoEl.addEventListener('canplay', () => {
           if (reelThumbnail) reelThumbnail.style.display = 'none';
+          reelShellEl.classList.add('is-playing-video');
           reelVideoEl.play().catch(() => {});
         }, { once: true });
         reelVideoEl.addEventListener('error', () => {
