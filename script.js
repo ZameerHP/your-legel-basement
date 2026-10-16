@@ -219,6 +219,7 @@
     let fallbackTimer = null;
 
     const showDriveFallback = () => {
+      window.clearTimeout(fallbackTimer);
       reelShell.classList.add('use-drive-fallback');
       if (reelFallback && !reelFallback.src) {
         reelFallback.src = reelFallback.dataset.src;
@@ -229,34 +230,42 @@
       if (reelStarted) return;
       reelStarted = true;
 
-      const src = reelVideo.dataset.src;
-      if (src) {
-        reelVideo.src = src;
-        reelVideo.removeAttribute('data-src');
-        reelVideo.load();
-      }
+      const tryPlay = () => {
+        if (reelShell.classList.contains('use-drive-fallback')) return;
+        reelVideo.play().catch(() => {
+          // Keep native controls available when autoplay is blocked.
+          reelShell.classList.add('reel-ready');
+        });
+      };
 
-      const tryPlay = () => reelVideo.play().catch(() => {});
       reelVideo.addEventListener('loadeddata', () => {
         reelShell.classList.add('reel-ready');
         window.clearTimeout(fallbackTimer);
         tryPlay();
-      }, { once:true });
-
+      });
       reelVideo.addEventListener('canplay', () => {
         reelShell.classList.add('reel-ready');
         window.clearTimeout(fallbackTimer);
         tryPlay();
-      }, { once:true });
+      });
+      reelVideo.addEventListener('error', showDriveFallback);
+      reelVideo.addEventListener('stalled', () => {
+        if (reelVideo.readyState < 2) showDriveFallback();
+      });
 
-      reelVideo.addEventListener('error', showDriveFallback, { once:true });
-      reelVideo.addEventListener('stalled', () => { if (reelVideo.readyState < 2) showDriveFallback(); }, { once:true });
+      const src = reelVideo.dataset.src;
+      if (src) {
+        reelVideo.src = src;
+        reelVideo.removeAttribute('data-src');
+      }
       fallbackTimer = window.setTimeout(() => {
         if (reelVideo.readyState < 2) showDriveFallback();
-      }, 2800);
+      }, 5000);
+      reelVideo.load();
+      tryPlay();
     };
 
-    // Start loading immediately so the Instagram phone never stays blank while waiting for scroll observation.
+    // Load the featured reel immediately; if direct playback is blocked, use the Drive preview.
     startReel();
   }
 
