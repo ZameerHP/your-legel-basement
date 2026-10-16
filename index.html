@@ -152,7 +152,13 @@
             <span class="instagram-float-dot"></span><div><small>ACTIVE</small><strong>GTA Projects</strong></div>
           </div>
 
-          <div class="instagram-device">
+          <div class="social-phone-stage" data-social-phone-stage>
+            <div class="social-phone-controls" aria-label="Switch social media preview">
+              <button class="social-phone-arrow" type="button" data-phone-prev aria-label="Show Instagram phone">←</button>
+              <span class="social-phone-indicator"><b data-phone-label>INSTAGRAM</b><i>01 / 02</i></span>
+              <button class="social-phone-arrow" type="button" data-phone-next aria-label="Show Facebook phone">→</button>
+            </div>
+          <div class="instagram-device social-phone-panel is-active" data-phone-panel="instagram">
             <span class="phone-hardware phone-action" aria-hidden="true"></span>
             <span class="phone-hardware phone-volume-up" aria-hidden="true"></span>
             <span class="phone-hardware phone-volume-down" aria-hidden="true"></span>
@@ -178,7 +184,7 @@
                 playsinline
                 controls
                 preload="none"
-                poster="https://drive.google.com/thumbnail?id=19nPKB_ORUDXCGQShWsLjuz0S4zuZLFyW&sz=w900"
+                poster="https://scontent.fkhi6-2.fna.fbcdn.net/v/t1.15752-9/850667859_2453020275222612_7812802037465089383_n.jpg?_nc_cat=109&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=fc17b8&_nc_ohc=n1oj7r0xvksQ7kNvwEbHQPP&_nc_oc=AdoxmatZsmOxIR79TwfeiV7yvVw5ONDGoPaFIxLYIhptJJhcTz7FlwE2MJjZ2PHjW80&_nc_zt=23&_nc_ht=scontent.fkhi6-2.fna&_nc_ss=7b6a8&oh=03_Q7cD6gEBrzzDJDY1h8n3hR5UO3tnKH80-ZFFPiFonvF0lSE7oQ&oe=6AF970B3"
                 aria-label="Yours Legal Basement project Reel"
                 data-src="https://drive.google.com/uc?export=download&id=19nPKB_ORUDXCGQShWsLjuz0S4zuZLFyW">
               </video>
@@ -203,7 +209,7 @@
             </a>
           </div>
 
-          <div class="facebook-device" aria-label="Facebook Reel preview">
+          <div class="facebook-device social-phone-panel" data-phone-panel="facebook" aria-label="Facebook Reel preview">
             <div class="facebook-device-top">
               <span class="facebook-device-brand"><b>f</b><strong>Facebook</strong></span>
               <span class="facebook-device-menu">•••</span>
@@ -226,6 +232,7 @@
             </a>
           </div>
 
+          </div>
           <div class="instagram-accent instagram-accent-one" aria-hidden="true"></div>
           <div class="instagram-accent instagram-accent-two" aria-hidden="true"></div>
         </div>
