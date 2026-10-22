@@ -193,15 +193,46 @@
   });
 
   const form = document.querySelector('#estimateForm');
-  form?.addEventListener('submit', (e) => {
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const status = form.querySelector('.form-status');
-    const button = form.querySelector('button');
-    if (status) status.textContent = 'Thanks — your estimate request is ready. For immediate service, call (437) 237-7704.';
+    const button = form.querySelector('button[type="submit"]');
+    const label = button?.querySelector('span');
+    if (button?.disabled) return;
+
+    if (status) {
+      status.textContent = 'Sending your request…';
+      status.setAttribute('aria-live', 'polite');
+    }
     if (button) {
-      button.classList.add('submitted');
-      const label = button.querySelector('span');
-      if (label) label.textContent = 'Request Received';
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+    }
+    if (label) label.textContent = 'Sending…';
+
+    try {
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+      const response = await fetch('/api/send-estimate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || 'We could not send your request. Please try again or call (437) 237-7704.');
+
+      if (status) status.textContent = 'Thank you — your request has been sent successfully. We’ll be in touch soon.';
+      if (button) button.classList.add('submitted');
+      if (label) label.textContent = 'Request Sent';
+      form.reset();
+    } catch (error) {
+      if (status) status.textContent = error.message || 'Something went wrong. Please try again or call (437) 237-7704.';
+      if (label) label.textContent = 'Try Again';
+    } finally {
+      if (button) {
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+      }
     }
   });
 
