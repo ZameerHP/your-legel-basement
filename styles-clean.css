@@ -4267,3 +4267,25 @@ button,a,input,select,textarea{min-width:0}
     font-size:12px!important;
   }
 }
+
+
+/* Project modal: keep its own scroll input independent from Lenis page scrolling. */
+.project-modal-panel{
+  overflow-x:hidden;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+  scroll-behavior:smooth;
+  scrollbar-gutter:stable;
+}
+.project-modal-panel,
+.project-modal-panel *{
+  -webkit-overflow-scrolling:touch;
+}
+.project-modal-gallery{
+  min-height:0;
+}
+@media (prefers-reduced-motion:reduce){
+  .project-modal-panel{scroll-behavior:auto}
+}
